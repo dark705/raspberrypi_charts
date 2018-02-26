@@ -1,0 +1,12 @@
+[Unit]
+Description=log power
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=60
+ExecStart=/usr/bin/php /var/www/html/voltage/service/mysql-power.php
+
+[Install]
+WantedBy=multi-user.target
