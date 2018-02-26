@@ -1,15 +1,15 @@
 <?php
 //autoload my lib's
 spl_autoload_register(function ($class){
-	$filename = "lib/myLib/$class.php";
+	$filename = "../lib/myLib/$class.php";
 	if (file_exists($filename))
 		include_once ($filename); 
 });
 date_default_timezone_set( 'UTC' );
 
-$config = new mConfigIni('config/config.web.ini');
+$config = new mConfigIni('../config/config.web.ini');
 $mysql = new mMySQL($config->dbHost, $config->dbName, $config->dbLogin,$config->dbPass);
-$snames = new mConfigIni('config/config.sensor_names.ini');
+$snames = new mConfigIni('../config/config.sensor_names.ini');
 
 
 //get serials DS18B20 from DB and names from config
@@ -21,7 +21,7 @@ while ($record = $result->fetch_row()){
 		$serials[$record[0]] = $record[0];
 }
 
-//show all serials in array
+//show all serials and names in array
 if (isset($_GET['serials'])){
 	echo json_encode($serials);
 }

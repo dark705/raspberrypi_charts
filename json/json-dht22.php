@@ -1,13 +1,13 @@
 <?php
 //autoload my lib's
 spl_autoload_register(function ($class){
-	$filename = "lib/myLib/$class.php";
+	$filename = "../lib/myLib/$class.php";
 	if (file_exists($filename))
 		include_once ($filename); 
 });
 date_default_timezone_set( 'UTC' );
 
-$config = new mConfigIni('config/config.web.ini');
+$config = new mConfigIni('../config/config.web.ini');
 $mysql = new mMySQL($config->dbHost, $config->dbName, $config->dbLogin,$config->dbPass);
 
 $result = $mysql->request("SELECT `datetime`, `temperature`, `humidity` FROM `t_dht22`;");

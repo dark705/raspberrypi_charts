@@ -1,12 +1,12 @@
 <?php
-$serials_file = 'http://' . $_SERVER['SERVER_ADDR'] . pathinfo($_SERVER['PHP_SELF'])["dirname"] . '/' . 'json-ds18b20.php?serials';
+$serials_file = 'http://' . $_SERVER['SERVER_ADDR'] . pathinfo($_SERVER['PHP_SELF'])["dirname"] . '/json/' . 'json-ds18b20.php?serials';
 $serials = json_decode(file_get_contents($serials_file));
 foreach($serials as $serial => $name)
 {
 ?>
 <div id="ds18b20-<?php echo $serial;?>" style="height: 400px; min-width: 310px"></div>
 <script>
-			$.getJSON('json-ds18b20.php?serial=<?php echo $serial;?>', function (data) {
+			$.getJSON('json/json-ds18b20.php?serial=<?php echo $serial;?>', function (data) {
 
 				var temperature = [],
 					dataLength = data.length;
