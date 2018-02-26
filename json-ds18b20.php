@@ -18,9 +18,7 @@ while ($record = $result->fetch_row()){
 
 //show all serials 
 if (isset($_GET['serials'])){
-	foreach($serials as $serial){
-		echo $serial . ';';
-	}
+	echo json_encode($serials);
 }
 
 
