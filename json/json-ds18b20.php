@@ -16,23 +16,23 @@ $snames = new mConfigIni('../config/config.sensor_names.ini');
 $result = $mysql->request("SELECT DISTINCT `serial` FROM `ds18b20`;");
 while ($record = $result->fetch_row()){
 	if ($snames->$record[0])
-		$serials[$record[0]] = $snames->$record[0];
+		$sensors[$record[0]] = $snames->$record[0];
 	else
-		$serials[$record[0]] = $record[0];
+		$sensors[$record[0]] = $record[0];
 }
 
 //show all serials and names in array
-if (isset($_GET['serials'])){
-	echo json_encode($serials);
+if (isset($_GET['names'])){
+	echo json_encode($sensors);
 }
 
 
-if (isset($_GET['serial']) and array_key_exists($_GET['serial'], $serials)){
+if (isset($_GET['serial']) and array_key_exists($_GET['serial'], $sensors)){
 	$serial = $_GET['serial'];	
 	$result = $mysql->request("SELECT `datetime`, `temperature` FROM `ds18b20` WHERE `serial` = '$serial';");
 	while ($record = $result->fetch_row()){
-		$all[] =  array(strtotime($record[0]), (float)$record[1]);
+		$sensor[] =  array(strtotime($record[0]), (float)$record[1]);
 	}
-	echo json_encode($all);
+	echo json_encode($sensor);
 }
 ?>

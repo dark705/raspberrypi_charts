@@ -1,7 +1,7 @@
 <?php
-$serials_file = 'http://' . $_SERVER['SERVER_ADDR'] . pathinfo($_SERVER['PHP_SELF'])["dirname"] . '/json/' . 'json-ds18b20.php?serials';
-$serials = json_decode(file_get_contents($serials_file));
-foreach($serials as $serial => $name)
+$sensors_file = 'http://' . $_SERVER['SERVER_ADDR'] . pathinfo($_SERVER['PHP_SELF'])["dirname"] . '/json/' . 'json-ds18b20.php?names';
+$sensors = json_decode(file_get_contents($sensors_file));
+foreach($sensors as $serial => $name)
 {
 ?>
 <div id="ds18b20-<?php echo $serial;?>" style="height: 400px; min-width: 310px"></div>
