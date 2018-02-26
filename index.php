@@ -66,13 +66,9 @@ function updateLegendLabel() {
 		$.getJSON('jsonp.php', function (data) {
 
 				// split the data set into voltage and current
-				var voltage = [],
-					current = [],
-					active = [],
-					dataLength = data.length,
+				var voltage = [], current = [], active = [];
 
-				i = 0;
-				for (i; i < dataLength; i += 1) {
+				for (var i = 0; i < data.length; i++) {
 					voltage.push([
 						data[i][0] * 1000, // the date
 						data[i][1], // voltage
@@ -229,12 +225,9 @@ function updateLegendLabel() {
 		$.getJSON('jsond.php', function (data) {
 
 				// split the data set into temperature and humidity
-				var temperature = [],
-					humidity = [],
-					dataLength = data.length,
+				var temperature = [], humidity = [];
 
-				i = 0;
-				for (i; i < dataLength; i += 1) {
+				for (var i = 0; i < data.length; i++) {
 					temperature.push([
 						data[i][0] * 1000, // the date
 						data[i][1], // temperature
