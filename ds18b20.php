@@ -4,7 +4,7 @@ $serials = json_decode(file_get_contents($serials_file));
 foreach($serials as $serial => $name)
 {
 ?>
-<div id="ds18b20-<?php echo $serial;?>" style="height: 500px; min-width: 310px"></div>
+<div id="ds18b20-<?php echo $serial;?>" style="height: 400px; min-width: 310px"></div>
 <script>
 			$.getJSON('json-ds18b20.php?serial=<?php echo $serial;?>', function (data) {
 
@@ -76,9 +76,17 @@ foreach($serials as $serial => $name)
 						  afterSetExtremes: updateLegendLabel
 						}
 					},
-
+					yAxis: {
+						labels: {
+							align: 'right',
+							x: -3
+						},
+						title: {
+							text: 'Температура'
+						}
+					},
 					series: [{
-						name: 'Температура',
+						name: 'С° <?php echo $name;?>',
 						data: temperature,
 						type: 'spline',
 						tooltip: {
