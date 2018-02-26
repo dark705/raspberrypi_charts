@@ -365,6 +365,9 @@ function updateLegendLabel() {
 
 </script>
 
+<?php include 'ds18b20.php'?>
+
+
 
 	</body>
 </html>
