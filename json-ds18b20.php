@@ -9,20 +9,25 @@ date_default_timezone_set( 'UTC' );
 
 $config = new mConfigIni('config/config.web.ini');
 $mysql = new mMySQL($config->dbHost, $config->dbName, $config->dbLogin,$config->dbPass);
+$snames = new mConfigIni('config/config.sensor_names.ini');
 
-//get serials DS18B20
+
+//get serials DS18B20 from DB and names from config
 $result = $mysql->request("SELECT DISTINCT `serial` FROM `ds18b20`;");
 while ($record = $result->fetch_row()){
-	$serials[] = $record[0];
+	if ($snames->$record[0])
+		$serials[$record[0]] = $snames->$record[0];
+	else
+		$serials[$record[0]] = $record[0];
 }
 
-//show all serials 
+//show all serials in array
 if (isset($_GET['serials'])){
 	echo json_encode($serials);
 }
 
 
-if (isset($_GET['serial']) and in_array($_GET['serial'], $serials)){
+if (isset($_GET['serial']) and array_key_exists($_GET['serial'], $serials)){
 	$serial = $_GET['serial'];	
 	$result = $mysql->request("SELECT `datetime`, `temperature` FROM `ds18b20` WHERE `serial` = '$serial';");
 	while ($record = $result->fetch_row()){

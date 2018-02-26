@@ -1,7 +1,7 @@
 <?php
 $serials_file = 'http://' . $_SERVER['SERVER_ADDR'] . pathinfo($_SERVER['PHP_SELF'])["dirname"] . '/' . 'json-ds18b20.php?serials';
 $serials = json_decode(file_get_contents($serials_file));
-foreach($serials as $serial)
+foreach($serials as $serial => $name)
 {
 ?>
 <div id="ds18b20-<?php echo $serial;?>" style="height: 500px; min-width: 310px"></div>
@@ -66,7 +66,7 @@ foreach($serials as $serial)
 					},
 					
 					title: {
-						text: 'Температура <?php echo $serial;?>'
+						text: '<?php echo $name;?>'
 					},
 					
 					xAxis: {
