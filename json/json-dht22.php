@@ -10,7 +10,12 @@ date_default_timezone_set( 'UTC' );
 $config = new mConfigIni('../config/config.web.ini');
 $mysql = new mMySQL($config->dbHost, $config->dbName, $config->dbLogin,$config->dbPass);
 
-$result = $mysql->request("SELECT `datetime`, `temperature`, `humidity` FROM `t_dht22`;");
+if (isset($_GET['last'])){//if get last show only last value
+	$result = $mysql->request("SELECT `datetime`, `temperature`, `humidity` FROM `t_dht22` ORDER BY `datetime` DESC LIMIT 0,1;");
+}
+else{
+	$result = $mysql->request("SELECT `datetime`, `temperature`, `humidity` FROM `t_dht22`;");
+}
 
 while ($record = $result->fetch_row()){
 	$all[] =  array(strtotime($record[0]), (float)$record[1], (float)$record[2]);

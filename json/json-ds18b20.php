@@ -26,10 +26,16 @@ if (isset($_GET['names'])){
 	echo json_encode($sensors);
 }
 
-
+//show date only by serial=sserial_num sensor
 if (isset($_GET['serial']) and array_key_exists($_GET['serial'], $sensors)){
-	$serial = $_GET['serial'];	
-	$result = $mysql->request("SELECT `datetime`, `temperature` FROM `ds18b20` WHERE `serial` = '$serial';");
+	$serial = $_GET['serial'];
+	if (isset($_GET['last'])){//if get last show only last value
+		$result = $mysql->request("SELECT `datetime`, `temperature` FROM `ds18b20` WHERE `serial` = '$serial' ORDER BY `datetime` DESC LIMIT 0,1;");
+	}
+	else{
+		$result = $mysql->request("SELECT `datetime`, `temperature` FROM `ds18b20` WHERE `serial` = '$serial';");
+	}
+	
 	while ($record = $result->fetch_row()){
 		$sensor[] =  array(strtotime($record[0]), (float)$record[1]);
 	}
