@@ -1,4 +1,3 @@
-<script>
 function updateLegendLabel() {
   var chrt = !this.chart ? this : this.chart;
   chrt.update({
@@ -39,4 +38,3 @@ function updateLegendLabel() {
     }
   });
 }
-</script>
