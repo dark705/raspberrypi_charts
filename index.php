@@ -17,6 +17,7 @@
 <script src="lib/highstock/lang/ru.js"></script>
 
 
+<?php include 'views/summary.php';?>
 <?php include 'views/common.php';?>
 <?php include 'views/pzem004t.php';?>
 <?php include 'views/dht22.php';?>
