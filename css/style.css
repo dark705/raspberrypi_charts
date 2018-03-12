@@ -5,6 +5,11 @@
 	padding:3em;
 }
 
+.item h3{
+	padding:0;
+	margin:0;
+}
+
 .item:hover {
 	background-color: #eee;
 }
@@ -12,4 +17,8 @@
 .clear {
 	float:none;
 	clear:both;
+}
+.ontime {
+	margin:0;
+	font-size:0.9em;
 }
