@@ -24,17 +24,23 @@ $temperature = $weather[1];
 $humidity = $weather[2];
 ?>
 
-
+<div class="item">
 <h3>Электросеть:</h3>
 <p>Напряжение: <?=$voltage?></p>
 <p>Ток: <?=$current?></p>
 <p>Мощность: <?=$power?></p>
+</div>
 
+<div class="item">
 <h3>Погода:</h3>
 <p>Температура: <?=$temperature?></p>
 <p>Влажность: <?=$humidity?></p>
+</div>
 
 <?foreach($sensors as $sensor):?>
+	<div class="item">
 	<h3><?=$sensor['name']?></h3>
 	<p>Температура: <?=$sensor['temperature']?></p>
+	</div>
 <?endforeach;?>
+<div class="clear"></div>

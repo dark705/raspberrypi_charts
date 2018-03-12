@@ -1,0 +1,15 @@
+.item {
+	float:left;
+	border:1px solid #ddd;
+	margin-left:2em;
+	padding:3em;
+}
+
+.item:hover {
+	background-color: #eee;
+}
+
+.clear {
+	float:none;
+	clear:both;
+}

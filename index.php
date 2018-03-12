@@ -3,11 +3,8 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Highstock Example</title>
-
-		<style type="text/css">
-
-		</style>
+		<title>Sensors</title>
+		<link rel="stylesheet" href="css\style.css">
 	</head>
 	<body>
 		<script src="lib/jquery/jquery-3.2.1.min.js"></script>
