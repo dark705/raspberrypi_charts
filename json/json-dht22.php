@@ -18,7 +18,7 @@ else{
 }
 
 while ($record = $result->fetch_row()){
-	$all[] =  array(strtotime($record[0]), (float)$record[1], (float)$record[2]);
+	$all[] =  array('datetime' => strtotime($record[0]), 'temperature' => (float)$record[1], 'humidity' => (float)$record[2]);
 }
 
 echo json_encode($all);

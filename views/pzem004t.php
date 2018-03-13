@@ -7,18 +7,18 @@
 
 				for (var i = 0; i < data.length; i++) {
 					voltage.push([
-						data[i][0] * 1000, // the date
-						data[i][1], // voltage
+						data[i]["datetime"] * 1000, // the date
+						data[i]["voltage"], // voltage
 					]);
 
 					current.push([
-						data[i][0] * 1000, // the date
-						data[i][2] // the current
+						data[i]["datetime"] * 1000, // the date
+						data[i]["current"] // the current
 					]);
 					
 					active.push([
-						data[i][0] * 1000, // the date
-						data[i][3] // the active power
+						data[i]["datetime"] * 1000, // the date
+						data[i]["active"] // the active power
 					]);
 				}
 

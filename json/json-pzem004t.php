@@ -19,7 +19,7 @@ else{
 }
 
 while ($record = $result->fetch_row()){
-	$all[] =  array(strtotime($record[0]), (float)$record[1], (float)$record[2], (float)$record[3]);
+	$all[] =  array('datetime' => strtotime($record[0]), 'voltage' => (float)$record[1], 'current' => (float)$record[2], 'active' => (float)$record[3]);
 }
 
 echo json_encode($all);

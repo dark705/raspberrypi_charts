@@ -7,13 +7,13 @@
 
 				for (var i = 0; i < data.length; i++) {
 					temperature.push([
-						data[i][0] * 1000, // the date
-						data[i][1], // temperature
+						data[i]["datetime"] * 1000, // the date
+						data[i]["temperature"], // temperature
 					]);
 
 					humidity.push([
-						data[i][0] * 1000, // the date
-						data[i][2] // the humidity
+						data[i]["datetime"] * 1000, // the date
+						data[i]["humidity"] // the humidity
 					]);
 				}
 

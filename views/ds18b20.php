@@ -1,21 +1,21 @@
 <?php
-$sensors_file = 'http://' . $_SERVER['SERVER_ADDR'] . pathinfo($_SERVER['PHP_SELF'])["dirname"] . '/json/' . 'json-ds18b20.php?names';
-$sensors = json_decode(file_get_contents($sensors_file));
-foreach($sensors as $serial => $name)
+$ds18b20Names = 'http://' . $_SERVER['SERVER_ADDR'] . pathinfo($_SERVER['PHP_SELF'])["dirname"] . '/json/' . 'json-ds18b20.php?names';
+$ds18b20s = json_decode(file_get_contents($ds18b20Names));
+foreach($ds18b20s as $serial => $name)
 {
 ?>
-<div id="ds18b20-<?php echo $serial;?>" style="height: 400px; min-width: 310px"></div>
+<div id="ds18b20_<?php echo $serial;?>" style="height: 400px; min-width: 310px"></div>
 <script>
 			$.getJSON('json/json-ds18b20.php?serial=<?php echo $serial;?>', function (data) {
 
 				var temperature = [],
 					dataLength = data.length;
 				for (var i = 0; i < dataLength; i++) {
-					temperature.push([data[i][0] * 1000, data[i][1]]);
+					temperature.push([data[i]["datetime"] * 1000, data[i]["temperature"]]);
 				}
 				
 				
-				Highcharts.stockChart('ds18b20-<?php echo $serial;?>', {
+				Highcharts.stockChart('ds18b20_<?php echo $serial;?>', {
 					rangeSelector: {
 						selected: 3,
 						buttons: [{

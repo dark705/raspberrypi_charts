@@ -37,7 +37,7 @@ if (isset($_GET['serial']) and array_key_exists($_GET['serial'], $sensors)){
 	}
 	
 	while ($record = $result->fetch_row()){
-		$sensor[] =  array(strtotime($record[0]), (float)$record[1]);
+		$sensor[] =  array('datetime' => strtotime($record[0]), 'temperature' => (float)$record[1]);
 	}
 	echo json_encode($sensor);
 }

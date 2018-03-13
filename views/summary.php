@@ -6,49 +6,39 @@ $urlDht22 = $urlCommon . 'json-dht22.php?last';
 $pzem004t = json_decode(file_get_contents($urlPzem004t))[0]; //get only one, last value
 $dht22 = json_decode(file_get_contents($urlDht22))[0];
 
+
 //Get ds18b20 names
-$urlSensorsNames = $urlCommon. 'json-ds18b20.php?names';
-$sensorsNames = json_decode(file_get_contents($urlSensorsNames));
+$urlDs18b20Names = $urlCommon. 'json-ds18b20.php?names';
+$ds12b20Names = json_decode(file_get_contents($urlDs18b20Names));
 
 //For each ds18b20
-foreach ($sensorsNames as  $serial => $name){
-	$urlSensor = $urlCommon . "json-ds18b20.php?serial=$serial".'&last';
-	$sensor = json_decode(file_get_contents($urlSensor))[0];//get only one, last value
-	$temperature = $sensor[1];
-	$time = $sensor[0];
-	$sensors[$serial] = array('time'=> $time, 'name' => $name, 'temperature' => $temperature);//Associate array, key as serial
+foreach ($ds12b20Names as  $serial => $name){
+	$urlDs18b20 = $urlCommon . "json-ds18b20.php?serial=$serial".'&last';
+	$ds18b20s[$serial] = json_decode(file_get_contents($urlDs18b20))[0];//get only one, last value, Associate array, key as serial
+	$ds18b20s[$serial]->name = $name; //append name property with name of ds18b20 geted from config
 }
-
-$time_electro =  $pzem004t[0];
-$voltage = $pzem004t[1];
-$current = $pzem004t[2];
-$power = $pzem004t[3];
-
-$time_wheather =  $dht22[0];
-$temperature = $dht22[1];
-$humidity = $dht22[2];
 ?>
 
 <div class="item">
 <h3>Электросеть:</h3>
-<p class="ontime">(показания на <?=gmdate("Y-m-d H:i:s", $time_electro)?>)</p>
-<p>Напряжение: <?=$voltage?></p>
-<p>Ток: <?=$current?></p>
-<p>Мощность: <?=$power?></p>
+<p class="ontime">(показания на <?=gmdate("Y-m-d H:i:s", $pzem004t->datetime)?>)</p>
+<p>Напряжение: <?=$pzem004t->voltage?></p>
+<p>Ток: <?=$pzem004t->current?></p>
+<p>Мощность: <?=$pzem004t->active?></p>
 </div>
 
 <div class="item">
 <h3>Погода:</h3>
-<p class="ontime">(показания на <?=gmdate("Y-m-d H:i:s", $time_wheather)?>)</p>
-<p>Температура: <?=$temperature?></p>
-<p>Влажность: <?=$humidity?></p>
+<p class="ontime">(показания на <?=gmdate("Y-m-d H:i:s", $dht22->datetime)?>)</p>
+<p>Температура: <?=$dht22->temperature?></p>
+<p>Влажность: <?=$dht22->humidity?></p>
 </div>
 
-<?foreach($sensors as $sensor):?>
+<?foreach($ds18b20s as $ds18b20):?>
 	<div class="item">
-	<h3><?=$sensor['name']?></h3>
-	<p class="ontime">(показания на <?=gmdate("Y-m-d H:i:s", $sensor['time'])?>)</p>
-	<p>Температура: <?=$sensor['temperature']?></p>
+	<h3><?=$ds18b20->name?></h3>
+	<p class="ontime">(показания на <?=gmdate("Y-m-d H:i:s", $ds18b20->datetime)?>)</p>
+	<p>Температура: <?=$ds18b20->temperature?></p>
 	</div>
 <?endforeach;?>
 <div class="clear"></div>
