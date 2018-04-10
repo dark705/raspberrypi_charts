@@ -15,7 +15,7 @@ if (isset($_GET['last'])){//if get last show only last value
 	$result = $mysql->request("SELECT `datetime`, `voltage`, `current`,`active` FROM `t_power` ORDER BY `datetime` DESC LIMIT 0,1;");
 }
 else{
-	$result = $mysql->request("SELECT `datetime`, `voltage`, `current`,`active` FROM `t_power`;");
+	$result = $mysql->request("SELECT `datetime`, `voltage`, `current`,`active` FROM `t_power` WHERE `datetime` > NOW() - INTERVAL 90 DAY;");
 }
 
 while ($record = $result->fetch_row()){
@@ -23,5 +23,6 @@ while ($record = $result->fetch_row()){
 }
 
 echo json_encode($all);
+
 
 ?>

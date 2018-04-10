@@ -14,7 +14,7 @@ if (isset($_GET['last'])){//if get last show only last value
 	$result = $mysql->request("SELECT `datetime`, `temperature`, `humidity` FROM `t_dht22` ORDER BY `datetime` DESC LIMIT 0,1;");
 }
 else{
-	$result = $mysql->request("SELECT `datetime`, `temperature`, `humidity` FROM `t_dht22`;");
+	$result = $mysql->request("SELECT `datetime`, `temperature`, `humidity` FROM `t_dht22` WHERE `datetime` > NOW() - INTERVAL 90 DAY;");
 }
 
 while ($record = $result->fetch_row()){

@@ -33,7 +33,7 @@ if (isset($_GET['serial']) and array_key_exists($_GET['serial'], $sensors)){
 		$result = $mysql->request("SELECT `datetime`, `temperature` FROM `ds18b20` WHERE `serial` = '$serial' ORDER BY `datetime` DESC LIMIT 0,1;");
 	}
 	else{
-		$result = $mysql->request("SELECT `datetime`, `temperature` FROM `ds18b20` WHERE `serial` = '$serial';");
+		$result = $mysql->request("SELECT `datetime`, `temperature` FROM `ds18b20` WHERE `serial` = '$serial' AND `datetime` > NOW() - INTERVAL 90 DAY;");
 	}
 	
 	while ($record = $result->fetch_row()){
