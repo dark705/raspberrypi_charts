@@ -22,7 +22,7 @@ if ($data = $peacefair->getData()){
 		echo $key.':'.$val.PHP_EOL;
 	}
 	// Write to MySQL
-	$query = "INSERT INTO `power`.`t_power` (`datetime`, `voltage`, `current`, `active`, `energy`) ";
+	$query = "INSERT INTO `pzem004t` (`datetime`, `voltage`, `current`, `active`, `energy`) ";
 	$query .="VALUES (now(), '$data[voltage]', '$data[current]', '$data[active]', '$data[energy]');";
 	$mysql->request($query);
 }

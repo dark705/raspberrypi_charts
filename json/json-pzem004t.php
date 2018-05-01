@@ -12,10 +12,10 @@ $mysql = new mMySQL($config->dbHost, $config->dbName, $config->dbLogin,$config->
 
 
 if (isset($_GET['last'])){//if get last show only last value
-	$result = $mysql->request("SELECT `datetime`, `voltage`, `current`,`active` FROM `t_power` ORDER BY `datetime` DESC LIMIT 0,1;");
+	$result = $mysql->request("SELECT `datetime`, `voltage`, `current`,`active` FROM `pzem004t` ORDER BY `datetime` DESC LIMIT 0,1;");
 }
 else{
-	$result = $mysql->request("SELECT `datetime`, `voltage`, `current`,`active` FROM `t_power` WHERE `datetime` > NOW() - INTERVAL 90 DAY;");
+	$result = $mysql->request("SELECT `datetime`, `voltage`, `current`,`active` FROM `pzem004t` WHERE `datetime` > NOW() - INTERVAL 31 DAY;");
 }
 
 while ($record = $result->fetch_row()){

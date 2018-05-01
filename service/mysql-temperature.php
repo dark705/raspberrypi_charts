@@ -18,7 +18,7 @@ if ($data = $ds->getAll()){
 		echo $key.' = '.$val.PHP_EOL;
 	}
 	foreach($data as $key => $val){
-		$query = "INSERT INTO `power`.`ds18b20` (`datetime`, `serial`, `temperature`) ";
+		$query = "INSERT INTO `ds18b20` (`datetime`, `serial`, `temperature`) ";
 		$query .="VALUES (now(), '$key', '$val');";
 		$mysql->request($query);
 	}

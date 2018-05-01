@@ -23,7 +23,7 @@ if ($data = $dht22->getData()){
 	}
 	
 	// Write to MySQL
-	$query = "INSERT INTO `power`.`t_dht22` (`datetime`,`temperature`, `humidity`) ";
+	$query = "INSERT INTO `dht22` (`datetime`,`temperature`, `humidity`) ";
 	$query .="VALUES (now(), '$data[temperature]', '$data[humidity]');";
 	$mysql->request($query);
 	

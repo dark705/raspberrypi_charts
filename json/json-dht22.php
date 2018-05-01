@@ -11,10 +11,10 @@ $config = new mConfigIni('../config/config.web.ini');
 $mysql = new mMySQL($config->dbHost, $config->dbName, $config->dbLogin,$config->dbPass);
 
 if (isset($_GET['last'])){//if get last show only last value
-	$result = $mysql->request("SELECT `datetime`, `temperature`, `humidity` FROM `t_dht22` ORDER BY `datetime` DESC LIMIT 0,1;");
+	$result = $mysql->request("SELECT `datetime`, `temperature`, `humidity` FROM `dht22` ORDER BY `datetime` DESC LIMIT 0,1;");
 }
 else{
-	$result = $mysql->request("SELECT `datetime`, `temperature`, `humidity` FROM `t_dht22` WHERE `datetime` > NOW() - INTERVAL 90 DAY;");
+	$result = $mysql->request("SELECT `datetime`, `temperature`, `humidity` FROM `dht22` WHERE `datetime` > NOW() - INTERVAL 31 DAY;");
 }
 
 while ($record = $result->fetch_row()){

@@ -1,4 +1,4 @@
-<div id="pzem004t" style="height: 500px; min-width: 310px"></div>
+<div id="pzem004t" style="height: 800px; min-width: 310px"></div>
 <script>
 		$.getJSON('json/json-pzem004t.php', function (data) {
 

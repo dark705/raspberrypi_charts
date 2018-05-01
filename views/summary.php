@@ -34,11 +34,11 @@ foreach ($ds12b20Names as  $serial => $name){
 <p>Влажность: <?=$dht22->humidity?></p>
 </div>
 
-<?foreach($ds18b20s as $ds18b20):?>
+<?php foreach($ds18b20s as $ds18b20):?>
 	<div class="item">
 	<h3><?=$ds18b20->name?></h3>
 	<p class="ontime">(показания на <?=gmdate("Y-m-d H:i:s", $ds18b20->datetime)?>)</p>
 	<p>Температура: <?=$ds18b20->temperature?></p>
 	</div>
-<?endforeach;?>
+<?php endforeach;?>
 <div class="clear"></div>
