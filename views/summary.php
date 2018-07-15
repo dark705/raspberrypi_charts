@@ -18,15 +18,15 @@ foreach ($ds12b20Names as  $serial => $name){
 	$ds18b20s[$serial]->name = $name; //append name property with name of ds18b20 geted from config
 }
 ?>
-
-<div class="item">
-<h3>Электросеть:</h3>
-<p class="ontime">(показания на <?=gmdate("Y-m-d H:i:s", $pzem004t->datetime)?>)</p>
-<p>Напряжение: <?=$pzem004t->voltage?></p>
-<p>Ток: <?=$pzem004t->current?></p>
-<p>Мощность: <?=$pzem004t->active?></p>
+<div id="electro__last">
+	<div class="item">
+		<h3>Электросеть:</h3>
+		<p id="electro__last__time" class="ontime">(показания на <?=gmdate("Y-m-d H:i:s", $pzem004t->datetime)?>)</p>
+		<p id="electro__last__voltage">Напряжение: <?=$pzem004t->voltage?></p>
+		<p id="electro__last__current">Ток: <?=$pzem004t->current?></p>
+		<p id="electro__last__active">Мощность: <?=$pzem004t->active?></p>
+	</div>
 </div>
-
 <div class="item">
 <h3>Погода:</h3>
 <p class="ontime">(показания на <?=gmdate("Y-m-d H:i:s", $dht22->datetime)?>)</p>
@@ -42,3 +42,15 @@ foreach ($ds12b20Names as  $serial => $name){
 	</div>
 <?php endforeach;?>
 <div class="clear"></div>
+<script>
+	'use strict';
+	$(function(){
+		$.getJSON('json/json-pzem004t.php?last', function(data){
+			console.log(data);
+			$('#electro__last__voltage').append(data[0].voltage);
+			$('#electro__last__current').append(data[0].current);
+			$('#electro__last__active').append(data[0].active);
+		});
+	});
+
+</script>

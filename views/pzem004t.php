@@ -1,28 +1,24 @@
 <div id="pzem004t" style="height: 800px; min-width: 310px"></div>
 <script>
 		$.getJSON('json/json-pzem004t.php', function (data) {
-
+				
 				// split the data set into voltage and current
+				
 				var voltage = [], current = [], active = [];
 
+				$.each(data, function(index, value){
+					voltage.push([value.datetime * 1000, value.voltage]);
+					current.push([value.datetime * 1000, value.current]);
+					active.push([value.datetime * 1000, value.active]);
+				});
+
+				/*
 				for (var i = 0; i < data.length; i++) {
-					voltage.push([
-						data[i]["datetime"] * 1000, // the date
-						data[i]["voltage"], // voltage
-					]);
-
-					current.push([
-						data[i]["datetime"] * 1000, // the date
-						data[i]["current"] // the current
-					]);
-					
-					active.push([
-						data[i]["datetime"] * 1000, // the date
-						data[i]["active"] // the active power
-					]);
+					voltage.push([data[i].datetime * 1000, data[i].voltage]);
+					current.push([data[i].datetime * 1000, data[i].current]);
+					active.push([data[i].datetime * 1000, data[i].active]);
 				}
-
-
+				*/
 				// create the chart
 				Highcharts.stockChart('pzem004t', {
 
