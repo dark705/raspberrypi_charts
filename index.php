@@ -8,11 +8,13 @@
 	</head>
 	<body>
 		<script src="lib/jquery/jquery-3.2.1.min.js"></script>
+		<script src="lib/date.js"></script>
 		<script src="lib/highstock/highstock.js"></script>
 		<script src="lib/highstock/themes/grid-light.js"></script>
 		<script src="lib/highstock/modules/exporting.js"></script>
 		<script src="lib/highstock/lang/ru.js"></script>
 		<script src="js/legend.js"></script>
+		
 
 
 		<?php include 'views/summary.php';?>
