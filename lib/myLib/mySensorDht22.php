@@ -16,7 +16,7 @@ class mySensorDht22{
 	}
 	  
 	public function get(){
-		$query = "SELECT `datetime`, `temperature`, `humidity` FROM `dht22` WHERE `datetime` > NOW() - INTERVAL 31 DAY;"; 
+		$query = "SELECT `datetime`, `temperature`, `humidity` FROM `dht22` WHERE `datetime` > NOW() - INTERVAL 5 DAY;"; 
 		return $this->result($query);
 	}
 	

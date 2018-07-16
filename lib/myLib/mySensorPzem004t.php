@@ -16,7 +16,7 @@ class mySensorPzem004t{
 	}
 	  
 	public function get(){
-		$query = "SELECT `datetime`, `voltage`, `current`,`active` FROM `pzem004t` WHERE `datetime` > NOW() - INTERVAL 1 DAY;"; 
+		$query = "SELECT `datetime`, `voltage`, `current`,`active` FROM `pzem004t` WHERE `datetime` > NOW() - INTERVAL 5 DAY;"; 
 		return $this->result($query);
 	}
 	

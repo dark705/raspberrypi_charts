@@ -1,73 +1,90 @@
 <?php
-$urlCommon = 'http://' . $_SERVER['SERVER_ADDR'] . pathinfo($_SERVER['PHP_SELF'])["dirname"] . '/json/';
-
 $config = new mConfigIni('config/config.web.ini');
+$dsNames = new mConfigIni('config/config.sensor_names.ini'); 
 
-$last_electro = (new mySensorPzem004t($config))->getLast()[0];
-$last_weather = (new mySensorDht22($config))->getLast()[0];
+$lastE = (new mySensorPzem004t($config))->getLast()[0];
+$lastW = (new mySensorDht22($config))->getLast()[0];
 
-
-
-//Get ds18b20 names
-$urlDs18b20Names = $urlCommon. 'json.php?sensor=ds18b20&names';
-$ds12b20Names = json_decode(file_get_contents($urlDs18b20Names));
-
-//For each ds18b20
-foreach ($ds12b20Names as  $serial => $name){
-	$urlDs18b20 = $urlCommon . "json.php?sensor=ds18b20&serial=$serial".'&last';
-	$ds18b20s[$serial] = json_decode(file_get_contents($urlDs18b20))[0];//get only one, last value, Associate array, key as serial
-	$ds18b20s[$serial]->name = $name; //append name property with name of ds18b20 geted from config
-}
+$ds18b20 = new mySensorDs18b20($config, $dsNames);
 ?>
-<div id="last__electro">
-	<div class="item">
-		<h3>Электросеть:</h3>
-		<p id="last__electro__time" class="ontime" class="loading">(показания на: <span><?=$last_electro['datetime']?></span>)</p>
-		<p id="last__electro__voltage" class="loading">Напряжение: <span><?=$last_electro['voltage']?></span></p>
-		<p id="last__electro__current" class="loading">Ток: <span><?=$last_electro['current']?></span></p>
-		<p id="last__electro__active" class="loading">Мощность: <span><?=$last_electro['active']?></span></p>
-	</div>
-</div>
-<div id="last__weather">
-	<div class="item">
-		<h3>Погода:</h3>
-		<p id="last__weather__time" class="ontime" class="loading">(показания на: <span><?=$last_weather['datetime']?></span>)</p>
-		<p id="last__weather__temp" class="loading">Температура: <span><?=$last_weather['temperature']?></span></p>
-		<p id="last__weather__humidity" class="loading">Влажность: <span><?=$last_weather['humidity']?></span></p>
-	</div>
-</div>
 
-<?php foreach($ds18b20s as $ds18b20):?>
-	<div class="item">
-	<h3><?=$ds18b20->name?></h3>
-	<p class="ontime">(показания на <?=gmdate("Y-m-d H:i:s", $ds18b20->datetime)?>)</p>
-	<p>Температура: <?=$ds18b20->temperature?></p>
-	</div>
+<!-- start electro last section -->
+<div id="last__electro" class="item">
+	<h3>Электросеть:</h3>
+	<p id="last__electro__time" class="ontime" >(показания на: <span><?=gmdate("Y-m-d H:i:s", $lastE['datetime'])?></span>)</p>
+	<p id="last__electro__voltage">Напряжение: <span><?=$lastE['voltage']?></span></p>
+	<p id="last__electro__current">Ток: <span><?=$lastE['current']?></span></p>
+	<p id="last__electro__active">Мощность: <span><?=$lastE['active']?></span></p>
+
+</div>
+<!-- end -->
+
+<!-- start weather last section -->
+<div id="last__weather" class="item ">
+	<h3>Погода:</h3>
+	<p id="last__weather__time" class="ontime">(показания на: <span><?=gmdate("Y-m-d H:i:s", $lastW['datetime'])?></span>)</p>
+	<p id="last__weather__temp">Температура: <span><?=$lastW['temperature']?></span></p>
+	<p id="last__weather__humidity">Влажность: <span><?=$lastW['humidity']?></span></p>
+</div>
+<!-- end -->
+
+<!-- start ds18b20 last section -->
+<?php foreach($ds18b20->getNames() as  $serial => $name):?>
+<div id="<?=$serial?>" class="item last__ds18b20">
+	<h3><?=$name?></h3>
+	<?php $lastD = $ds18b20->getLast($serial)[0]; ?>
+	<p class="last__ds18b20__time ontime">(показания на: <span><?=gmdate("Y-m-d H:i:s", $lastD['datetime'])?></span>)</p>
+	<p class="last__ds18b20__temp">Температура: <span><?=$lastD['temperature']?></span></p>
+</div>
 <?php endforeach;?>
+<!-- end -->
+
+
 <div class="clear"></div>
+
 <script>
 	'use strict';
-	/*
-	$(function(){
+	function updateLastElectro(){
 		$.getJSON('json/json.php?sensor=pzem004t&last', function(data){
-			var d = new Date((data[0].datetime - 3*60*60) * 1000);
-			var datetime = d.toString('yyyy-MM-dd HH:mm:ss');
-			$('#last__electro__time span').append(datetime);
-			$('#last__electro__voltage').append(data[0].voltage);
-			$('#last__electro__current').append(data[0].current);
-			$('#last__electro__active').append(data[0].active);
+			data = data[0];
+			var d = new Date((data.datetime - 3*60*60) * 1000);
+			data.datetime = d.toString('yyyy-MM-dd HH:mm:ss');			
+			$('#last__electro__time span').text(data.datetime);
+			$('#last__electro__voltage span').text(data.voltage);
+			$('#last__electro__current span').text(data.current);
+			$('#last__electro__active span').text(data.active);
 		});
-	});
+	}
+	
+	function updateLastWeather(){
+		$.getJSON('json/json.php?sensor=dht22&last', function(data){
+			data = data[0];
+			var d = new Date((data.datetime - 3*60*60) * 1000);
+			data.datetime = d.toString('yyyy-MM-dd HH:mm:ss');
+			$('#last__weather__time span').text(data.datetime);
+			$('#last__weather__temp span').text(data.temperature);
+			$('#last__weather__humidity span').text(data.humidity);
+		});
+	}
+	
+	function updateLastDs18b20(){
+		$(".last__ds18b20").each(function(index, thisEl){
+			var serial = $(this).attr('id');
+			$.getJSON('json/json.php?sensor=ds18b20&serial=' + serial +'&last', function(data){
+				data = data[0];
+				var d = new Date((data.datetime - 3*60*60) * 1000);
+				data.datetime = d.toString('yyyy-MM-dd HH:mm:ss');
+				$(thisEl).find('.last__ds18b20__time span').text(data.datetime);
+				$(thisEl).find('.last__ds18b20__temp span').text(data.temperature);
+			});
+		});
+	}
 	
 	$(function(){
-		$.getJSON('json/json.php?sensor=dht22&last', function(data){
-			var d = new Date((data[0].datetime - 3*60*60) * 1000);
-			var datetime = d.toString('yyyy-MM-dd HH:mm:ss');
-			$('#last__weather__time span').append(datetime);
-			$('#last__weather__temp').append(data[0].temperature);
-			$('#last__weather__humidity').append(data[0].humidity);
-
-		});
+		setInterval(function(){
+			updateLastElectro();
+			updateLastWeather();
+			updateLastDs18b20()
+		}, 4*60*1000);
 	});
-	*/
 </script>
