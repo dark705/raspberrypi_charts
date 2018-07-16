@@ -1,3 +1,18 @@
+<?php
+spl_autoload_register(function ($class){
+	$filename = "lib/myLib/$class.php";
+	if (file_exists($filename))
+		include_once ($filename); 
+});
+
+spl_autoload_register(function($class){
+	$file = str_replace('\\', '/', $class) . '.php';
+	if(file_exists($file)){
+		require_once($file);
+	}
+});
+
+?>
 <!DOCTYPE HTML>
 <html>
 	<head>

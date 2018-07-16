@@ -1,6 +1,6 @@
 <div id="pzem004t" style="height: 800px; min-width: 310px"></div>
 <script>
-		$.getJSON('json/json-pzem004t.php', function (data) {
+		$.getJSON('json/json.php?sensor=pzem004t', function (data) {
 				
 				// split the data set into voltage and current
 				

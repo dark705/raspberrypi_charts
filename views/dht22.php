@@ -1,6 +1,6 @@
 <div id="dht22" style="height: 500px; min-width: 310px"></div>
 <script>
-		$.getJSON('json/json-dht22.php', function (data) {
+		$.getJSON('json/json.php?sensor=dht22', function (data) {
 
 				// split the data set into temperature and humidity
 				var temperature = [], humidity = [];
