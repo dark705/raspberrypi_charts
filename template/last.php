@@ -1,12 +1,4 @@
-<?php
-$config = new mConfigIni('config/config.web.ini');
-$names = new mConfigIni('config/config.names.ini'); 
-
-$lastE = SensorsFactory::create('Pzem004t', $config, null)->getLast()[0];
-$lastW = SensorsFactory::create('Dht22', $config, null)->getLast()[0];
-$ds18b20 = SensorsFactory::create('Ds18b20', $config, $names);
-?>
-
+<?php $lastE = $pzem004t->getLast()[0];?>
 <!-- start electro last section -->
 <a class="itemlink" href="#chart__electro">
 <div id="last__electro" class="item">
@@ -20,6 +12,7 @@ $ds18b20 = SensorsFactory::create('Ds18b20', $config, $names);
 </a>
 <!-- end -->
 
+<?php $lastW = $dht22->getLast()[0];?>
 <!-- start weather last section -->
 <a class="itemlink" href="#chart__weather">
 <div id="last__weather" class="item ">
@@ -43,8 +36,6 @@ $ds18b20 = SensorsFactory::create('Ds18b20', $config, $names);
 </a>
 <?php endforeach;?>
 <!-- end -->
-
-
 <div class="clear"></div>
 
 <script>

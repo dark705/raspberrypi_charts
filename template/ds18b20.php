@@ -1,10 +1,4 @@
-<?php
-$config = new mConfigIni('config/config.web.ini');
-$names = new mConfigIni('config/config.names.ini'); 
-$ds18b20 = SensorsFactory::create('Ds18b20', $config, $names);
-foreach($ds18b20->getNames() as $serial => $name)
-{
-?>
+<?foreach($ds18b20->getNames() as $serial => $name):?>
 <div class="chart">
 	<a name="chart__<?=$serial?>"></a>
 	<div id="ds18b20_<?=$serial?>" style="height: 400px; min-width: 310px"></div>
@@ -66,4 +60,5 @@ foreach($ds18b20->getNames() as $serial => $name)
 				});
 			});
 </script>
-<?php }?>
+
+<?endforeach;?>

@@ -2,8 +2,8 @@
 	float:left;
 	border:1px solid #ddd;
 	margin-left:2em;
-	padding:3em;
-	width: 18em;
+	padding:2em;
+	width: 13em;
 }
 
 .item h3{
@@ -21,7 +21,7 @@
 }
 .ontime {
 	margin:0;
-	font-size:0.9em;
+	font-size:0.8em;
 }
 
 .itemlink {
