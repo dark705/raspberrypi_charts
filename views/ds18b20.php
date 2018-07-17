@@ -10,7 +10,7 @@ foreach($ds18b20->getNames() as $serial => $name)
 	<div id="ds18b20_<?=$serial?>" style="height: 400px; min-width: 310px"></div>
 </div>
 <script>
-			$.getJSON('json/json.php?sensor=ds18b20&serial=<?php echo $serial;?>', function (data) {
+			$.getJSON('json/json.php?sensor=ds18b20&serial=<?=$serial?>', function (data) {
 
 				var temperature = [],
 					dataLength = data.length;
