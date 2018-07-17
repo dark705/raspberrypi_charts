@@ -26,7 +26,7 @@ class mySensorDs18b20{
 	public function get($serial){
 		if (!array_key_exists($serial, $this->ds))
 			exit("no sensor with serial $serial");
-		$query = "SELECT `datetime`, `temperature` FROM `ds18b20` WHERE `serial` = '$serial' AND `datetime` > NOW() - INTERVAL 5 DAY;"; 
+		$query = "SELECT `datetime`, `temperature` FROM `ds18b20` WHERE `serial` = '$serial' AND `datetime` > NOW() - INTERVAL 31 DAY;"; 
 		return $this->result($query);
 	}
 	

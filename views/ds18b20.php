@@ -16,41 +16,7 @@ foreach($ds18b20s as $serial => $name)
 				
 				
 				Highcharts.stockChart('ds18b20_<?php echo $serial;?>', {
-					rangeSelector: {
-						selected: 3,
-						buttons: [{
-							type: 'minute',
-							count: 10,
-							text: '10м'
-						}, {
-							type: 'hour',
-							count: 1,
-							text: '1час'
-						}, {
-							type: 'hour',
-							count: 6,
-							text: '6час'
-						}, {
-							type: 'day',
-							count: 1,
-							text: '1дн'
-						}, {
-							type: 'week',
-							count: 1,
-							text: 'неделя'
-						}, {
-							type: 'month',
-							count: 1,
-							text: 'мес'
-						}, {
-							type: 'year',
-							count: 1,
-							text: 'год'
-						}, {
-							type: 'all',
-							text: 'Всё'
-						}]
-					},
+					rangeSelector: rangeSelectorObj,
 					
 					chart: {
 						events: {

@@ -1,11 +1,10 @@
 <?php
 $config = new mConfigIni('config/config.web.ini');
-$dsNames = new mConfigIni('config/config.sensor_names.ini'); 
+$names = new mConfigIni('config/config.names.ini'); 
 
-$lastE = (new mySensorPzem004t($config))->getLast()[0];
-$lastW = (new mySensorDht22($config))->getLast()[0];
-
-$ds18b20 = new mySensorDs18b20($config, $dsNames);
+$lastE = SensorsFactory::create('Pzem004t', $config, null)->getLast()[0];
+$lastW = SensorsFactory::create('Dht22', $config, null)->getLast()[0];
+$ds18b20 = SensorsFactory::create('Ds18b20', $config, $names);
 ?>
 
 <!-- start electro last section -->
@@ -53,6 +52,7 @@ $ds18b20 = new mySensorDs18b20($config, $dsNames);
 			$('#last__electro__voltage span').text(data.voltage);
 			$('#last__electro__current span').text(data.current);
 			$('#last__electro__active span').text(data.active);
+			$('#last__electro').animate({opacity: 0.1}, 500).animate({opacity: 1.0}, 500)
 		});
 	}
 	
@@ -64,6 +64,7 @@ $ds18b20 = new mySensorDs18b20($config, $dsNames);
 			$('#last__weather__time span').text(data.datetime);
 			$('#last__weather__temp span').text(data.temperature);
 			$('#last__weather__humidity span').text(data.humidity);
+			$('#last__weather').animate({opacity: 0.1}, 500).animate({opacity: 1.0}, 500)
 		});
 	}
 	
@@ -76,6 +77,7 @@ $ds18b20 = new mySensorDs18b20($config, $dsNames);
 				data.datetime = d.toString('yyyy-MM-dd HH:mm:ss');
 				$(thisEl).find('.last__ds18b20__time span').text(data.datetime);
 				$(thisEl).find('.last__ds18b20__temp span').text(data.temperature);
+				$('#' + serial).animate({opacity: 0.1}, 500).animate({opacity: 1.0}, 500)
 			});
 		});
 	}

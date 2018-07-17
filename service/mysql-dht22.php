@@ -9,10 +9,6 @@ $dht22 = new mDHT22($config->dhtPath, $config->dhtPin, $config->debug);
 $mysql = new mMySQL($config->dbHost, $config->dbName, $config->dbLogin,$config->dbPass);
 
 
-
-
-
-
 if ($data = $dht22->getData()){
 	$date = date('Y-m-d H:i:s');
 	
