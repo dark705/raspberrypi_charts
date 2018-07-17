@@ -23,6 +23,7 @@ spl_autoload_register(function ($class){
 		<script src="lib/highstock/modules/exporting.js"></script>
 		<script src="lib/highstock/lang/ru.js"></script>
 		<script src="js/legend.js"></script>
+		<script src="js/config.js"></script>
 		
 
 

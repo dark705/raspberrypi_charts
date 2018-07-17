@@ -1,7 +1,8 @@
 <?php
-$ds18b20Names = 'http://' . $_SERVER['SERVER_ADDR'] . pathinfo($_SERVER['PHP_SELF'])["dirname"] . '/json/' . 'json.php?sensor=ds18b20&names';
-$ds18b20s = json_decode(file_get_contents($ds18b20Names));
-foreach($ds18b20s as $serial => $name)
+$config = new mConfigIni('config/config.web.ini');
+$names = new mConfigIni('config/config.names.ini'); 
+$ds18b20 = SensorsFactory::create('Ds18b20', $config, $names);
+foreach($ds18b20->getNames() as $serial => $name)
 {
 ?>
 <div class="chart">
@@ -18,7 +19,7 @@ foreach($ds18b20s as $serial => $name)
 				}
 				
 				
-				Highcharts.stockChart('ds18b20_<?php echo $serial;?>', {
+				Highcharts.stockChart('ds18b20_<?=$serial?>', {
 					rangeSelector: rangeSelectorObj,
 					
 					chart: {
