@@ -4,7 +4,10 @@ $ds18b20s = json_decode(file_get_contents($ds18b20Names));
 foreach($ds18b20s as $serial => $name)
 {
 ?>
-<div id="ds18b20_<?php echo $serial;?>" style="height: 400px; min-width: 310px"></div>
+<div class="chart">
+	<a name="chart__<?=$serial?>"></a>
+	<div id="ds18b20_<?=$serial?>" style="height: 400px; min-width: 310px"></div>
+</div>
 <script>
 			$.getJSON('json/json.php?sensor=ds18b20&serial=<?php echo $serial;?>', function (data) {
 

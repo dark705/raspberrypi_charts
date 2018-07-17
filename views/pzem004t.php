@@ -1,4 +1,7 @@
-<div id="pzem004t" style="height: 800px; min-width: 310px"></div>
+<div class="chart">
+	<a name="chart__electro"></a>
+	<div id="pzem004t" style="height: 800px; min-width: 310px"></div>
+</div>
 <script>
 		$.getJSON('json/json.php?sensor=pzem004t', function (data) {
 				

@@ -8,6 +8,7 @@ $ds18b20 = SensorsFactory::create('Ds18b20', $config, $names);
 ?>
 
 <!-- start electro last section -->
+<a class="itemlink" href="#chart__electro">
 <div id="last__electro" class="item">
 	<h3>Электросеть:</h3>
 	<p id="last__electro__time" class="ontime" >(показания на: <span><?=gmdate("Y-m-d H:i:s", $lastE['datetime'])?></span>)</p>
@@ -16,25 +17,30 @@ $ds18b20 = SensorsFactory::create('Ds18b20', $config, $names);
 	<p id="last__electro__active">Мощность: <span><?=$lastE['active']?></span></p>
 
 </div>
+</a>
 <!-- end -->
 
 <!-- start weather last section -->
+<a class="itemlink" href="#chart__weather">
 <div id="last__weather" class="item ">
 	<h3>Погода:</h3>
 	<p id="last__weather__time" class="ontime">(показания на: <span><?=gmdate("Y-m-d H:i:s", $lastW['datetime'])?></span>)</p>
 	<p id="last__weather__temp">Температура: <span><?=$lastW['temperature']?></span></p>
 	<p id="last__weather__humidity">Влажность: <span><?=$lastW['humidity']?></span></p>
 </div>
+</a>
 <!-- end -->
 
 <!-- start ds18b20 last section -->
 <?php foreach($ds18b20->getNames() as  $serial => $name):?>
+<a class="itemlink" href="#chart__<?=$serial?>">
 <div id="<?=$serial?>" class="item last__ds18b20">
 	<h3><?=$name?></h3>
 	<?php $lastD = $ds18b20->getLast($serial)[0]; ?>
 	<p class="last__ds18b20__time ontime">(показания на: <span><?=gmdate("Y-m-d H:i:s", $lastD['datetime'])?></span>)</p>
 	<p class="last__ds18b20__temp">Температура: <span><?=$lastD['temperature']?></span></p>
 </div>
+</a>
 <?php endforeach;?>
 <!-- end -->
 

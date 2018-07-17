@@ -1,22 +1,16 @@
-<div id="dht22" style="height: 500px; min-width: 310px"></div>
+<div class="chart">
+	<a name="chart__weather"></a>
+	<div id="dht22" style="height: 500px; min-width: 310px"></div>
+</div>
 <script>
 		$.getJSON('json/json.php?sensor=dht22', function (data) {
 
 				// split the data set into temperature and humidity
 				var temperature = [], humidity = [];
-
-				for (var i = 0; i < data.length; i++) {
-					temperature.push([
-						data[i]["datetime"] * 1000, // the date
-						data[i]["temperature"], // temperature
-					]);
-
-					humidity.push([
-						data[i]["datetime"] * 1000, // the date
-						data[i]["humidity"] // the humidity
-					]);
-				}
-
+				$.each(data, function(index, value){
+					temperature.push([value.datetime * 1000, value.temperature]);
+					humidity.push([value.datetime * 1000, value.humidity]);	
+				});
 
 				// create the chart
 				Highcharts.stockChart('dht22', {
