@@ -1,6 +1,6 @@
 <div class="chart">
 	<a name="chart__weather"></a>
-	<div id="dht22" style="height: 500px; min-width: 310px"></div>
+	<div id="dht22" style="height: 500px; min-width: 310px" class="chart__loading">Загрузка данных...</div>
 </div>
 <script>
 		$.getJSON('json/json.php?sensor=dht22', function (data) {

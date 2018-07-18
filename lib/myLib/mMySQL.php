@@ -5,12 +5,15 @@ class mMySQL{
 	private $dbLogin;
 	private $dbPass;
 	
-	public function __construct($host, $name, $login, $pass, $charset = 'utf8'){
-		$this->dbHost = $host; 
-		$this->dbName = $name;
-		$this->dbLogin = $login;
-		$this->dbPass = $pass;
-		$this->dbCharset = $charset;
+	public function __construct($conf){
+		$this->dbHost = $conf->dbHost; 
+		$this->dbLogin = $conf->dbLogin;
+		$this->dbPass = $conf->dbPass;
+		$this->dbName = $conf->dbName;
+		//default
+		$this->dbCharset = 'utf8';
+		if ($conf->dbCharset)
+			$this->dbCharset = $conf->dbCharset;
 	}
 	
 	public function request($query){

@@ -27,3 +27,10 @@
 .itemlink {
 	color: #000;
 }
+
+.chart__loading {
+	font-size: 2em;
+    text-align: center;
+    color: gray;
+	border: 1px solid black;
+}

@@ -5,12 +5,10 @@ spl_autoload_register(function ($class){
 		include_once ($filename); 
 });
 
-$config = new mConfigIni('config/config.web.ini');
-$names = new mConfigIni('config/config.names.ini'); 
 
-$sensor_pzem004t = SensorsFactory::create('Pzem004t', $config, null);
-$sensor_dht22 = SensorsFactory::create('Dht22', $config, null);
-$sensor_ds18b20 = SensorsFactory::create('Ds18b20', $config, $names);
+$sensor_pzem004t = SensorsFactory::create('Pzem004t');
+$sensor_dht22 = SensorsFactory::create('Dht22');
+$sensor_ds18b20 = SensorsFactory::create('Ds18b20');
 
 $html_last = new mTemplate('template/last.php', array('pzem004t' => $sensor_pzem004t, 'dht22' => $sensor_dht22, 'ds18b20' => $sensor_ds18b20));
 $html_pzem004t = new mTemplate('template/pzem004t.php');

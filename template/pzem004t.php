@@ -1,6 +1,6 @@
 <div class="chart">
 	<a name="chart__electro"></a>
-	<div id="pzem004t" style="height: 800px; min-width: 310px"></div>
+	<div id="pzem004t" style="height: 800px; min-width: 310px" class="chart__loading">Загрузка данных...</div>
 </div>
 <script>
 		$.getJSON('json/json.php?sensor=pzem004t', function (data) {
@@ -17,7 +17,6 @@
 
 				// create the chart
 				Highcharts.stockChart('pzem004t', {
-
 					rangeSelector: rangeSelectorObj,
 
 					title: {
@@ -94,7 +93,7 @@
 					tooltip: {
 						split: true
 					},
-
+					
 					series: [{
 						type: 'spline',
 						name: 'Вольт',

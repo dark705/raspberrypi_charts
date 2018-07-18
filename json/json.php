@@ -13,9 +13,7 @@ if (!in_array($_GET['sensor'], $validSensors))
 		exit('invalid sensor name');
 
 	
-$config = new mConfigIni('../config/config.web.ini');
-$names = new mConfigIni('../config/config.names.ini');
-$sensor = SensorsFactory::create($_GET['sensor'], $config, $names);
+$sensor = SensorsFactory::create($_GET['sensor']);
 
 if (array_key_exists('names', $_GET)){
 	echo json_encode($sensor->getNames());

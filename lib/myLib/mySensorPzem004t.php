@@ -2,9 +2,9 @@
 class mySensorPzem004t{
 	private $my;
 	
-	public function __construct($config){
+	public function __construct($my){
 		date_default_timezone_set( 'UTC' );
-		$this->my = new mMySQL($config->dbHost, $config->dbName, $config->dbLogin,$config->dbPass);	
+		$this->my = $my;	
 	}
 	
 	private function result($query){

@@ -1,14 +1,14 @@
 <?php
 spl_autoload_register(function ($class){
-	$filename = "/var/www/html/voltage/lib/myLib/$class.php";
+	$filename = "/var/www/html/chart/lib/myLib/$class.php";
 	if (file_exists($filename))
 		include_once ($filename); 
 });
-$config = new mConfigIni('/var/www/html/voltage/config/config.service.ini');
+$config = new mConfigIni('/var/www/html/chart/config/config.service.ini');
+$my = new mConfigIni('/var/www/html/chart/config/config.mysql.service.ini');
+
 $peacefair = new mPeacefair(new mSerial($config->devPeacefair));
-$mysql = new mMySQL($config->dbHost, $config->dbName, $config->dbLogin,$config->dbPass);
-
-
+$mysql = new mMySQL($my);
 
 
 

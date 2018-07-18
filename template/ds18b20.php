@@ -1,7 +1,7 @@
 <?foreach($ds18b20->getNames() as $serial => $name):?>
 <div class="chart">
 	<a name="chart__<?=$serial?>"></a>
-	<div id="ds18b20_<?=$serial?>" style="height: 400px; min-width: 310px"></div>
+	<div id="ds18b20_<?=$serial?>" style="height: 400px; min-width: 310px" class="chart__loading">Загрузка данных...</div>
 </div>
 <script>
 			$.getJSON('json/json.php?sensor=ds18b20&serial=<?=$serial?>', function (data) {
