@@ -1,5 +1,7 @@
+<div id="lasts">
 <?php $lastE = $pzem004t->getLast()[0];?>
 <!-- start electro last section -->
+<div class="last">
 <a class="itemlink" href="#chart__electro">
 <div id="last__electro" class="item">
 	<h3>Электросеть:</h3>
@@ -10,10 +12,12 @@
 
 </div>
 </a>
+</div>
 <!-- end -->
 
 <?php $lastW = $dht22->getLast()[0];?>
 <!-- start weather last section -->
+<div class="last">
 <a class="itemlink" href="#chart__weather">
 <div id="last__weather" class="item ">
 	<h3>Погода:</h3>
@@ -22,10 +26,13 @@
 	<p id="last__weather__humidity">Влажность: <span><?=$lastW['humidity']?></span></p>
 </div>
 </a>
+</div>
 <!-- end -->
 
 <!-- start ds18b20 last section -->
+
 <?php foreach($ds18b20->getNames() as  $serial => $name):?>
+<div class="last">
 <a class="itemlink" href="#chart__<?=$serial?>">
 <div id="<?=$serial?>" class="item last__ds18b20">
 	<h3><?=$name?></h3>
@@ -34,7 +41,9 @@
 	<p class="last__ds18b20__temp">Температура: <span><?=$lastD['temperature']?></span></p>
 </div>
 </a>
+</div>
 <?php endforeach;?>
+
 <!-- end -->
 <div class="clear"></div>
 
@@ -84,6 +93,7 @@
 			updateLastElectro();
 			updateLastWeather();
 			updateLastDs18b20()
-		}, 4*60*1000);
+		}, 1*60*1000);
 	});
 </script>
+</div>

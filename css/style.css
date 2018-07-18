@@ -1,17 +1,27 @@
-.item {
-	float:left;
-	border:1px solid #ddd;
-	margin-left:2em;
-	padding:2em;
-	width: 13em;
+#lasts{
+	text-align:center;
+	border: 1px solid gray;
+	margin: 1em;
 }
 
-.item h3{
+.last {
+	display:inline-block;
+	vertical-align: middle;
+	margin:1em;
+	border:1px solid #ddd;
+	height: 10em;
+}
+
+.last h3{
 	padding:0;
 	margin:0;
 }
 
-.item:hover {
+.last p{
+	margin:0.2em;
+}
+
+.last:hover {
 	background-color: #eee;
 }
 
@@ -20,12 +30,17 @@
 	clear:both;
 }
 .ontime {
-	margin:0;
+
+	padding-bottom:0.6em;
 	font-size:0.8em;
 }
 
 .itemlink {
+	text-align:left;
+	display: block;
+	padding:2em;
 	color: #000;
+	text-decoration:none;
 }
 
 .chart{
