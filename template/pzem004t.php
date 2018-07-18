@@ -1,31 +1,13 @@
 <div class="chart">
 	<a name="chart__electro"></a>
-	<div id="pzem004t" style="height: 800px; min-width: 310px" class="chart__loading">Загрузка данных...</div>
+	<div id="pzem004t" style="height: 800px; min-width: 310px"></div>
 </div>
 <script>
-		$.getJSON('json/json.php?sensor=pzem004t', function (data) {
-				
-				// split the data set into voltage and current
-				
-				var voltage = [], current = [], active = [];
-
-				$.each(data, function(index, value){
-					voltage.push([value.datetime * 1000, value.voltage]);
-					current.push([value.datetime * 1000, value.current]);
-					active.push([value.datetime * 1000, value.active]);
-				});
-
-				// create the chart
-				Highcharts.stockChart('pzem004t', {
+				var chartPzem004t = Highcharts.stockChart('pzem004t', {
 					rangeSelector: rangeSelectorObj,
 
 					title: {
 						text: 'Электросеть'
-					},
-					chart: {
-						events: {
-						  load: updateLegendLabel
-						}
 					},
 					
 					legend: {
@@ -38,9 +20,6 @@
 					xAxis: {
 						type: 'datetime',
 						ordinal: false,
-						events: {
-						  afterSetExtremes: updateLegendLabel
-						}
 					},
 
 					yAxis: [{
@@ -97,20 +76,33 @@
 					series: [{
 						type: 'spline',
 						name: 'Вольт',
-						data: voltage,
 						yAxis: 0
 					}, {
 						type: 'spline',
 						name: 'Ампер',
-						data: current,
 						yAxis: 1
 					}, {
 						type: 'spline',
 						name: 'Ватт',
-						data: active,
 						yAxis: 2
 					}]
 				});
+			 chartPzem004t.showLoading();
+	
+		$.getJSON('json/json.php?sensor=pzem004t', function (data) {
+				
+				var voltage = [], current = [], active = [];
+				$.each(data, function(index, value){
+					voltage.push([value.datetime * 1000, value.voltage]);
+					current.push([value.datetime * 1000, value.current]);
+					active.push([value.datetime * 1000, value.active]);
+				});
+				
+				chartPzem004t.series[0].setData(voltage,false);
+				chartPzem004t.series[1].setData(current,false);
+				chartPzem004t.series[2].setData(active,true);
+				chartPzem004t.hideLoading();
+
 			});
 
 </script>

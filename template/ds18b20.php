@@ -1,27 +1,13 @@
 <?foreach($ds18b20->getNames() as $serial => $name):?>
 <div class="chart">
 	<a name="chart__<?=$serial?>"></a>
-	<div id="ds18b20_<?=$serial?>" style="height: 400px; min-width: 310px" class="chart__loading">Загрузка данных...</div>
+	<div id="ds18b20_<?=$serial?>" style="height: 400px; min-width: 310px">Загрузка данных...</div>
 </div>
 <script>
-			$.getJSON('json/json.php?sensor=ds18b20&serial=<?=$serial?>', function (data) {
-
-				var temperature = [],
-					dataLength = data.length;
-				for (var i = 0; i < dataLength; i++) {
-					temperature.push([data[i]["datetime"] * 1000, data[i]["temperature"]]);
-				}
-				
-				
-				Highcharts.stockChart('ds18b20_<?=$serial?>', {
+			
+			chartDs18b20__<?=md5($serial)?> =	Highcharts.stockChart('ds18b20_<?=$serial?>', {
 					rangeSelector: rangeSelectorObj,
-					
-					chart: {
-						events: {
-						  load: updateLegendLabel
-						}
-					},
-					
+
 					legend: {
 						enabled: true,
 						floating: false,
@@ -36,9 +22,6 @@
 					xAxis: {
 						type: 'datetime',
 						ordinal: false,
-						events: {
-						  afterSetExtremes: updateLegendLabel
-						}
 					},
 					yAxis: {
 						labels: {
@@ -51,14 +34,22 @@
 					},
 					series: [{
 						name: 'С° <?php echo $name;?>',
-						data: temperature,
 						type: 'spline',
 						tooltip: {
 							valueDecimals: 2
 						}
 					}]
 				});
+			chartDs18b20__<?=md5($serial)?>.showLoading();
+			
+			$.getJSON('json/json.php?sensor=ds18b20&serial=<?=$serial?>', function (data) {
+				var temperature = [],
+					dataLength = data.length;
+				for (var i = 0; i < dataLength; i++) {
+					temperature.push([data[i]["datetime"] * 1000, data[i]["temperature"]]);
+				}
+				chartDs18b20__<?=md5($serial)?>.series[0].setData(temperature);
+				chartDs18b20__<?=md5($serial)?>.hideLoading();
 			});
 </script>
-
 <?endforeach;?>

@@ -28,9 +28,7 @@
 	color: #000;
 }
 
-.chart__loading {
-	font-size: 2em;
-    text-align: center;
-    color: gray;
-	border: 1px solid black;
+.chart{
+	border: 1px solid gray;
+	margin: 1em;
 }

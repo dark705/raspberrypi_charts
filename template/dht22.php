@@ -1,30 +1,14 @@
 <div class="chart">
 	<a name="chart__weather"></a>
-	<div id="dht22" style="height: 500px; min-width: 310px" class="chart__loading">Загрузка данных...</div>
+	<div id="dht22" style="height: 500px; min-width: 310px"></div>
 </div>
 <script>
-		$.getJSON('json/json.php?sensor=dht22', function (data) {
-
-				// split the data set into temperature and humidity
-				var temperature = [], humidity = [];
-				$.each(data, function(index, value){
-					temperature.push([value.datetime * 1000, value.temperature]);
-					humidity.push([value.datetime * 1000, value.humidity]);	
-				});
-
-				// create the chart
-				Highcharts.stockChart('dht22', {
+				var chartDht22 = Highcharts.stockChart('dht22', {
 
 					rangeSelector: rangeSelectorObj,
 
 					title: {
 						text: 'Погода'
-					},
-					
-					chart: {
-						events: {
-						  load: updateLegendLabel
-						}
 					},
 					
 					legend: {
@@ -36,10 +20,7 @@
 					
 					xAxis: {
 						type: 'datetime',
-						ordinal: false,
-						events: {
-						  afterSetExtremes: updateLegendLabel
-						}
+						ordinal: false
 					},
 
 					yAxis: [{
@@ -84,15 +65,26 @@
 					series: [{
 						type: 'spline',
 						name: 'С°',
-						data: temperature,
 						yAxis: 0
 					}, {
 						type: 'spline',
 						name: '%',
-						data: humidity,
 						yAxis: 1
 					}]
 				});
+				
+		chartDht22.showLoading();
+		$.getJSON('json/json.php?sensor=dht22', function (data) {
+			
+			var temperature = [], humidity = [];
+			$.each(data, function(index, value){
+				temperature.push([value.datetime * 1000, value.temperature]);
+				humidity.push([value.datetime * 1000, value.humidity]);	
 			});
-
+			
+			chartDht22.series[0].setData(temperature,false);
+			chartDht22.series[1].setData(humidity,true);
+			chartDht22.hideLoading();
+			
+		});
 </script>
