@@ -13,11 +13,10 @@
 		<script src="lib/highstock/themes/grid-light.js"></script>
 		<script src="lib/highstock/modules/exporting.js"></script>
 		<script src="lib/highstock/lang/ru.js"></script>
-		<script src="js/legend.js"></script>
 		<script src="js/config.js"></script>
 		<?=$last?>
-		<?=$pzem004t;?>
-		<?=$dht22;?>
-		<?=$ds18b20;?>
+		<?=$pzem004t?>
+		<?=$dht22?>
+		<?=$ds18b20?>
 	</body>
 </html>
