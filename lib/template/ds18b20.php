@@ -42,7 +42,7 @@
 				});
 			chartDs18b20__<?=md5($serial)?>.showLoading();
 			
-			$.getJSON('json.php?sensor=ds18b20&serial=<?=$serial?>', function (data) {
+			$.post('', {sensor: 'ds18b20', serial: '<?=$serial?>'}, function (data) {
 				var temperature = [],
 					dataLength = data.length;
 				for (var i = 0; i < dataLength; i++) {

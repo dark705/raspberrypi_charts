@@ -6,7 +6,7 @@ spl_autoload_register(function ($class){
 });
 
 if ($_POST) {
-	
+	header("Content-Type: application/json");
 	$validSensors = array('pzem004t', 'dht22', 'ds18b20');
 	
 	if(!array_key_exists('sensor', $_POST))
@@ -33,8 +33,6 @@ if ($_POST) {
 	} else {
 		echo json_encode($sensor->get($serial));
 	}
-	
-	exit('invalid POST');
 } else {
 	$sensor_pzem004t = SensorsFactory::create('Pzem004t');
 	$sensor_dht22 = SensorsFactory::create('Dht22');
@@ -49,7 +47,3 @@ if ($_POST) {
 	
 	$html_common->show();
 }
-
-?>
-
-

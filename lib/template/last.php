@@ -50,7 +50,7 @@
 <script>
 	'use strict';
 	function updateLastElectro(){
-		$.getJSON('json.php?sensor=pzem004t&last', function(data){
+		$.post('', {sensor: 'pzem004t', last: 'true'}, function(data){
 			data = data[0];
 			var d = new Date((data.datetime - 3*60*60) * 1000);
 			data.datetime = d.toString('yyyy-MM-dd HH:mm:ss');			
@@ -63,7 +63,7 @@
 	}
 	
 	function updateLastWeather(){
-		$.getJSON('json.php?sensor=dht22&last', function(data){
+		$.post('', {sensor: 'dht22', last: 'true'}, function(data){
 			data = data[0];
 			var d = new Date((data.datetime - 3*60*60) * 1000);
 			data.datetime = d.toString('yyyy-MM-dd HH:mm:ss');
@@ -77,7 +77,7 @@
 	function updateLastDs18b20(){
 		$(".last__ds18b20").each(function(index, thisEl){
 			var serial = $(this).attr('id');
-			$.getJSON('json.php?sensor=ds18b20&serial=' + serial +'&last', function(data){
+			$.post('',  {sensor: 'ds18b20',serial:  serial, last: 'true'}, function(data){
 				data = data[0];
 				var d = new Date((data.datetime - 3*60*60) * 1000);
 				data.datetime = d.toString('yyyy-MM-dd HH:mm:ss');
