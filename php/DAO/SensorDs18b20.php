@@ -1,5 +1,7 @@
 <?php
-class mySensorDs18b20{
+namespace DAO;
+
+class SensorDs18b20{
 	private $my;
 	private $ds;
 	
@@ -42,4 +44,3 @@ class mySensorDs18b20{
 		return $this->ds;
 	}
 }
-?>

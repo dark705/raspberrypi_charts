@@ -1,5 +1,7 @@
 <?php
-class mySensorPzem004t{
+namespace DAO;
+
+class SensorPzem004t{
 	private $my;
 	
 	public function __construct($my){
@@ -25,5 +27,3 @@ class mySensorPzem004t{
 		return $this->result($query);
 	}
 }
-
-?>

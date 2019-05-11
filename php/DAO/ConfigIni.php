@@ -1,11 +1,7 @@
 <?php
-//Класс модели Старт
-class mConfigIni{
-	/*	//V.02
-		mConfigIni->get($param) - получить данные
-		mConfigIni->$param - получить данные
-	*/
-	
+namespace DAO;
+
+class ConfigIni{
 	private $config;
 
 	public function __construct ($file,$delimiter = '='){
@@ -32,4 +28,3 @@ class mConfigIni{
 			return null;
 	}
 }
-?>

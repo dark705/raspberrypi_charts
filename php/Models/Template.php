@@ -1,5 +1,7 @@
 <?php
-class mTemplate {
+namespace Models;
+
+class Template {
 	private $html;
 
 	public function __construct($file, $var = array()){
@@ -20,4 +22,3 @@ class mTemplate {
 		echo $this->html;
 	}
 }
-?>
