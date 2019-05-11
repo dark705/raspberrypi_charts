@@ -89,7 +89,7 @@
 				});
 			 chartPzem004t.showLoading();
 	
-		$.getJSON('json/json.php?sensor=pzem004t', function (data) {
+		$.getJSON('json.php?sensor=pzem004t', function (data) {
 				
 				var voltage = [], current = [], active = [];
 				$.each(data, function(index, value){

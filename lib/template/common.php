@@ -7,12 +7,12 @@
 		<link rel="stylesheet" href="css\style.css">
 	</head>
 	<body>
-		<script src="lib/jquery/jquery-3.2.1.min.js"></script>
-		<script src="lib/date.js"></script>
-		<script src="lib/highstock/highstock.js"></script>
-		<script src="lib/highstock/themes/grid-light.js"></script>
-		<script src="lib/highstock/modules/exporting.js"></script>
-		<script src="lib/highstock/lang/ru.js"></script>
+		<script src="js/jquery-3.2.1.min.js"></script>
+		<script src="js/date.js"></script>
+		<script src="js/highstock/highstock.js"></script>
+		<script src="js/highstock/themes/grid-light.js"></script>
+		<script src="js/highstock/modules/exporting.js"></script>
+		<script src="js/highstock/lang/ru.js"></script>
 		<script src="js/config.js"></script>
 		<?=$last?>
 		<?=$pzem004t?>

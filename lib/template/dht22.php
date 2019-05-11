@@ -74,7 +74,7 @@
 				});
 				
 		chartDht22.showLoading();
-		$.getJSON('json/json.php?sensor=dht22', function (data) {
+		$.getJSON('json.php?sensor=dht22', function (data) {
 			
 			var temperature = [], humidity = [];
 			$.each(data, function(index, value){
