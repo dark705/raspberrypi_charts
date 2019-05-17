@@ -1,4 +1,4 @@
-<?foreach($ds18b20->getNames() as $serial => $name):?>
+<?php foreach($ds18b20->getNames() as $serial => $name):?>
 <div class="chart">
 	<a name="chart__<?=$serial?>"></a>
 	<div id="ds18b20_<?=$serial?>" style="height: 400px; min-width: 310px">Загрузка данных...</div>
@@ -52,4 +52,4 @@
 				chartDs18b20__<?=md5($serial)?>.hideLoading();
 			});
 </script>
-<?endforeach;?>
+<?php endforeach;?>

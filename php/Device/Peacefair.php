@@ -1,11 +1,13 @@
 <?php
+namespace Device;
+
 //Peacefair(object Serial)->getData() - return array with keys "voltage", "current", "active", "energy" = currient values
 //Peacefair->voltage - get "voltage"...
-class mPeacefair{
+class Peacefair{
 	private $dev;
 	private $data;
 	
-	public function __construct(mSerial $dev){
+	public function __construct(Serial $dev){
 		$this->dev = $dev;
 		$this->data = array();
 	}

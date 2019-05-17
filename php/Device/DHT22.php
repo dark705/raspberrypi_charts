@@ -1,7 +1,9 @@
 <?php
+namespace Device;
+
 //mDHT22($exe, $pin)->getData() - return array with keys "humidity", "temperature"
 //mDHT22->temperature - get "temperature"...
-class mDHT22{
+class DHT22{
 	private $pin;
 	private $exe;
 	private $debug;
@@ -15,7 +17,7 @@ class mDHT22{
 	}
 
 	private function update(){
-		$dht = exec("$this->exe $this->pin");
+		$dht = exec("sudo $this->exe $this->pin");
 		if (preg_match_all('/\-?\d{1,3}\.\d{1}/', $dht, $dht_arr) == 2){
 			$this->data['temperature'] = $dht_arr[0][1];
 			$this->data['humidity'] = $dht_arr[0][0];

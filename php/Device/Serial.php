@@ -1,6 +1,8 @@
 <?php
+namespace Device;
+
 //Serial(device, debug (bool), initial)
-class mSerial{
+class Serial{
 	private $dev;
 	private $debug;
 	private $initial;

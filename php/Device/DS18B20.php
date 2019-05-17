@@ -1,7 +1,9 @@
 <?php
+namespace Device;
+
 //mDS18B20($debug)->getAll() - return array with keys as "serial" and value as temperature
 //mDS18B20->getTemp($serial) - get "temperature" of device with setial
-class mDS18B20{
+class DS18B20{
 	private $devs;
 	private $dirr;
 	private $data;
@@ -16,7 +18,6 @@ class mDS18B20{
 	
 	//search available device's
 	private function getDevs(){
-		$devs = false;
 		$dirs = scandir($this->dirr);
 		foreach($dirs as $dir){
 			if (preg_match('/[0-9a-f]{2}\-[0-9a-f]{12}/i',$dir, $dev)){

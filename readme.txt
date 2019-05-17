@@ -1,6 +1,6 @@
 request lib:
 https://github.com/WiringPi/WiringPi
-https://github.com/technion/lol_dht22
+https://github.com/technion/lol_dht22 (included as bin)
 
 1. Enable UART, and disable serial login console via 
 	raspi-config
