@@ -10,8 +10,8 @@ class SensorDs18b20{
 		$this->my = $my;
 		$result = $this->my->request("SELECT DISTINCT `serial` FROM `ds18b20`;");
 		while ($record = $result->fetch_row()){
-			if ($dsNames->get($record[0]))
-				$this->ds[$record[0]] = $dsNames->get($record[0]);
+			if (isset($dsNames[$record[0]]))
+				$this->ds[$record[0]] = $dsNames[$record[0]];
 			else
 				$this->ds[$record[0]] = $record[0];
 		}

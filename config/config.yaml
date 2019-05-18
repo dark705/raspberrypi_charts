@@ -1,0 +1,31 @@
+cli:
+  db:
+    host: 'localhost'
+    name: 'chart'
+    login: 'chart'
+    pass: 'chart'
+  device:
+    dht:
+      loldht: '../bin/loldht/loldht'
+      pin:  7
+    peacefair:
+      uart: '/dev/ttyS0'
+  stdout: true
+  debug:  false
+
+
+web:
+  db:
+    host: 'localhost'
+    name: 'chart'
+    login: 'chart'
+    pass: 'chart'
+  names:
+    28-04175021d3ff:  'Датчик 1 отключен'
+    28-041750878dff:  'Кухня'
+    28-0417503c27ff:  'Котёл выход'
+    28-0417504b52ff:  'Котёл приход с гаража'
+    28-041750859bff:  'Котёл вход'
+  stdout: true
+  debug:  false
+
