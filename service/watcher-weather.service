@@ -1,5 +1,5 @@
 [Unit]
-Description=log weather sensor
+Description=Watcher weather sensor
 After=network.target
 
 [Service]

@@ -1,5 +1,5 @@
 [Unit]
-Description=log power sensor
+Description=Watcher power sensor
 After=network.target
 
 [Service]
