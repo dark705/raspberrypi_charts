@@ -8,6 +8,7 @@ class Serial{
 	private $initial;
 	
 	public function __construct($dev, $debug = false, $initial = '9600 raw -echo'){
+        ini_set('max_execution_time', 10);
 		$this->dev = $dev;
 		$this->debug = $debug;
 		$this->initial = $initial;
@@ -16,6 +17,7 @@ class Serial{
 	public function txrx($tx){
 		if (file_exists($this->dev)){
 			exec('stty -F '.$this->dev.' '.$this->initial);
+			//TODO need use console for txrx instead direct device
 			if ($handle = fopen($this->dev, "r+")){
 				fwrite($handle, $tx);
 				$rx = fread($handle, 7 );
@@ -41,4 +43,3 @@ class Serial{
 		return false;
 	}
 }
-?>
