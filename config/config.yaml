@@ -10,7 +10,6 @@ cli:
     user: 'admin'
     password: 'admin'
     queue: 'sensor'
-    ack: true
   device:
     dht:
       loldht: '/../../bin/loldht/loldht'
@@ -29,11 +28,12 @@ web:
     login: 'chart'
     pass: 'chart'
   rabbitmq:
-    ip: 'localhost'
+    ip: '192.168.23.12'
     port: 5672
     user: 'admin'
     password: 'admin'
     queue: 'sensor'
+    ack: true
   names:
     28-04175021d3ff:  'Датчик 1 отключен'
     28-041750878dff:  'Кухня'

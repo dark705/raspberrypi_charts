@@ -11,10 +11,12 @@ class SimpleExchange
     protected $queue;
     protected $debug;
     protected $needAck;
+    protected $stdout;
 
-    public function __construct($config, $debug = false)
+    public function __construct($config, $stdout = false, $debug = false)
     {
         $this->debug = $debug;
+        $this->stdout = $stdout;
         $this->connection = new AMQPStreamConnection($config['ip'], $config['port'], $config['user'], $config['password']);
         $this->channel = $this->connection->channel();
         $this->queue = $config['queue'];

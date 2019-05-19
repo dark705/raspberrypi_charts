@@ -40,11 +40,14 @@ class SensorConsumer extends SimpleConsumer
         }
 
         if ($this->pdo->request($query)){
-            echo 'Success query' . PHP_EOL;
-
+            if ($this->stdout) {
+                echo 'Success query' . PHP_EOL;
+            }
             if ($this->needAck) {
                 $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
-                echo 'RMQ ack' . PHP_EOL;
+                if ($this->stdout) {
+                    echo 'RMQ ack' . PHP_EOL;
+                }
             }
         }
     }
