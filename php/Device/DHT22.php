@@ -12,7 +12,7 @@ class DHT22
     public function __construct($device, $debug = false)
     {
         $this->pin = $device['pin'];
-        $this->execute = $device['loldht'];
+        $this->execute = __DIR__ . $device['loldht'];
         $this->data = ['temperature' => false, 'humidity' => false];
         $this->debug = $debug;
     }

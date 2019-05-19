@@ -1,12 +1,12 @@
 [Unit]
-Description=log dht22 sensor
+Description=log weather sensor
 After=network.target
 
 [Service]
 Type=simple
 Restart=always
 RestartSec=300
-ExecStart=/usr/bin/php /var/www/html/voltage/service/mysql-dht22.php
+ExecStart=/usr/bin/php /var/www/html/chart-ng/service/weather.php
 
 [Install]
 WantedBy=multi-user.target

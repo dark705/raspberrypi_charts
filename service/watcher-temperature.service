@@ -1,0 +1,12 @@
+[Unit]
+Description=log temperature sensor
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=300
+ExecStart=/usr/bin/php /var/www/html/chart-ng/service/temperature.php
+
+[Install]
+WantedBy=multi-user.target

@@ -1,25 +1,39 @@
 cli:
   db:
     host: 'localhost'
-    name: 'chart'
+    name: 'chart-ng'
     login: 'chart'
     pass: 'chart'
+  rabbitmq:
+    ip: 'localhost'
+    port: 5672
+    user: 'admin'
+    password: 'admin'
+    queue: 'sensor'
+    ack: true
   device:
     dht:
-      loldht: '../bin/loldht/loldht'
+      loldht: '/../../bin/loldht/loldht'
       pin:  7
     peacefair:
       uart: '/dev/ttyS0'
+  direct_db_write: false
+  use_rabbitmq: true
   stdout: true
   debug:  false
-
 
 web:
   db:
     host: 'localhost'
-    name: 'chart'
+    name: 'chart-ng'
     login: 'chart'
     pass: 'chart'
+  rabbitmq:
+    ip: 'localhost'
+    port: 5672
+    user: 'admin'
+    password: 'admin'
+    queue: 'sensor'
   names:
     28-04175021d3ff:  'Датчик 1 отключен'
     28-041750878dff:  'Кухня'

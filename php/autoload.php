@@ -1,8 +1,8 @@
 <?php
-require_once '../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 spl_autoload_register(function($class){
-    $file = '../php/'. str_replace('\\', '/', $class) . '.php';
+    $file = __DIR__ . '/../php/'. str_replace('\\', '/', $class) . '.php';
     if(file_exists($file)){
         require_once($file);
     }
