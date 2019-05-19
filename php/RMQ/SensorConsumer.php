@@ -5,14 +5,19 @@ use PDO\MySQL;
 
 class SensorConsumer extends SimpleConsumer
 {
+    private $needAck;
     private $pdo;
+
+    public function setAck($ack){
+        $this->needAck = $ack;
+    }
 
     public function setPDO(MySQL $pdo)
     {
         $this->pdo = $pdo;
     }
 
-    public function processMessage($msg)
+    protected function processMessage($msg)
     {
         if ($this->debug) {
             echo 'Incoming message: ' . $msg->body . PHP_EOL;

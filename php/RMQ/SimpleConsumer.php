@@ -13,7 +13,7 @@ class SimpleConsumer extends SimpleExchange
         }
     }
 
-    public function processMessage($msg)
+    protected function processMessage($msg)
     {
         echo $msg->body;
     }

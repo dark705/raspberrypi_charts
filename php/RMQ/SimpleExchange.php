@@ -20,7 +20,6 @@ class SimpleExchange
         $this->connection = new AMQPStreamConnection($config['ip'], $config['port'], $config['user'], $config['password']);
         $this->channel = $this->connection->channel();
         $this->queue = $config['queue'];
-        $this->needAck = $config['ack'];
         $this->channel->queue_declare($this->queue, false, true, false, false);
     }
 
