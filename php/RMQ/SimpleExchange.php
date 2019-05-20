@@ -10,7 +10,6 @@ class SimpleExchange
     protected $channel;
     protected $queue;
     protected $debug;
-    protected $needAck;
     protected $stdout;
 
     public function __construct($config, $stdout = false, $debug = false)

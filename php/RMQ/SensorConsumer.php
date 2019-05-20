@@ -1,4 +1,5 @@
 <?php
+
 namespace RMQ;
 
 use PDO\MySQL;
@@ -8,7 +9,8 @@ class SensorConsumer extends SimpleConsumer
     private $needAck;
     private $pdo;
 
-    public function setAck($ack){
+    public function setAck($ack)
+    {
         $this->needAck = $ack;
     }
 
@@ -17,14 +19,14 @@ class SensorConsumer extends SimpleConsumer
         $this->pdo = $pdo;
     }
 
-    protected function processMessage($msg)
+    public function processMessage($msg)
     {
         if ($this->debug) {
             echo 'Incoming message: ' . $msg->body . PHP_EOL;
         }
         $mes = json_decode($msg->body, true);
 
-        switch($mes['sensor']){
+        switch ($mes['sensor']) {
             case 'peacefair':
                 $query = sprintf("INSERT INTO `pzem004t` (`datetime`, `voltage`, `current`, `active`, `energy`) VALUES ('%s', '%s', '%s', '%s', '%s');",
                     $mes['date'], $mes['data']['voltage'], $mes['data']['current'], $mes['data']['active'], $mes['data']['energy']);
@@ -44,12 +46,12 @@ class SensorConsumer extends SimpleConsumer
             echo 'SQL query: ' . $query . PHP_EOL;
         }
 
-        if ($this->pdo->request($query)){
+        if ($this->pdo->request($query)) {
             if ($this->stdout) {
                 echo 'Success query' . PHP_EOL;
             }
             if ($this->needAck) {
-                $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
+                $this->sendAck($msg);
                 if ($this->stdout) {
                     echo 'RMQ ack' . PHP_EOL;
                 }

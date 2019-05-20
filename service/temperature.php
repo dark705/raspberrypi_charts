@@ -7,14 +7,13 @@ use RMQ\SimpleProducer;
 use Symfony\Component\Yaml\Yaml;
 
 $config = Yaml::parseFile(__DIR__ . '/../config/config.yaml');
-$mysql = new MySQL($config['cli']['db']);
-$ds = new DS18B20($config['cli']['debug']);
+$ds = new DS18B20($config['service_sensor']['debug']);
 
 if ($data = $ds->getAll()) {
     $date = date('Y-m-d H:i:s');
 
     //Show info in console
-    if ($config['cli']['stdout']) {
+    if ($config['service_sensor']['stdout']) {
         echo 'date:' . $date . PHP_EOL;
         foreach ($data as $serial => $value) {
             echo $serial . ' = ' . $value . PHP_EOL;
@@ -22,7 +21,8 @@ if ($data = $ds->getAll()) {
     }
 
     // Direct write to MySQL
-    if ($config['cli']['direct_db_write']) {
+    if ($config['service_sensor']['direct_db_write']) {
+        $mysql = new MySQL($config['service_sensor']['db']);
         foreach ($data as $serial => $value) {
             $query = "INSERT INTO `ds18b20` (`datetime`, `serial`, `temperature`) ";
             $query .= "VALUES (now(), '$serial', '$value');";
@@ -31,8 +31,8 @@ if ($data = $ds->getAll()) {
     }
 
     // Publish message to RabbitMQ
-    if ($config['cli']['use_rabbitmq']) {
-        $producer = new SimpleProducer($config['cli']['rabbitmq']);
+    if ($config['service_sensor']['use_rabbitmq']) {
+        $producer = new SimpleProducer($config['service_sensor']['rabbitmq']);
         foreach ($data as $serial => $value) {
             $message = [
                 'sensor' => 'ds18b20',

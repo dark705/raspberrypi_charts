@@ -13,8 +13,13 @@ class SimpleConsumer extends SimpleExchange
         }
     }
 
-    protected function processMessage($msg)
+    public function processMessage($msg)
     {
         echo $msg->body;
+    }
+
+    protected function sendAck($msg)
+    {
+        $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
     }
 }
