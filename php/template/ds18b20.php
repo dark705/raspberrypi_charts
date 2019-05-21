@@ -42,12 +42,13 @@
 				});
 			chartDs18b20__<?=md5($serial)?>.showLoading();
 			
-			$.post('', {sensor: 'ds18b20', serial: '<?=$serial?>'}, function (data) {
-				var temperature = [],
-					dataLength = data.length;
-				for (var i = 0; i < dataLength; i++) {
-					temperature.push([data[i]["datetime"] * 1000, data[i]["temperature"]]);
-				}
+			$.post('', {sensor: 'ds18b20', serial: '<?=$serial?>'}, function (response) {
+                var temperature = [];
+                var index = response.types;
+                $.each(response.data, function (i, data) {
+                    temperature.push([data[index.datetime] * 1000, data[index.temperature]]);
+                });
+                
 				chartDs18b20__<?=md5($serial)?>.series[0].setData(temperature);
 				chartDs18b20__<?=md5($serial)?>.hideLoading();
 			});
