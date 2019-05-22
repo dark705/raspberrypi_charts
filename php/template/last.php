@@ -19,7 +19,6 @@
         </a>
     </div>
     <!-- end -->
-
     <!-- start weather last section -->
     <?php
     $lastW = $dht22->getLast();
@@ -39,7 +38,6 @@
         </a>
     </div>
     <!-- end -->
-
     <!-- start ds18b20 last section -->
     <?php foreach ($ds18b20->getNames() as $serial => $name): ?>
         <div class="last">
@@ -68,6 +66,8 @@
             $.post('', {sensor: 'pzem004t', last: 'true'}, function (response) {
                 var data = response.data[0];
                 var index = response.types;
+
+                //update last section
                 var d = new Date((data[index.datetime] - 3 * 60 * 60) * 1000);
                 var datetime = d.toString('yyyy-MM-dd HH:mm:ss');
                 $('#last__electro__time span').text(datetime);
@@ -75,6 +75,16 @@
                 $('#last__electro__current span').text(data[index.current]);
                 $('#last__electro__active span').text(data[index.active]);
                 $('#last__electro').animate({opacity: 0.1}, 500).animate({opacity: 1.0}, 500)
+
+                //update graph
+                var chartPzem004t = $('#pzem004t').highcharts();
+                var voltage = [data[index.datetime] * 1000, data[index.voltage]];
+                var current = [data[index.datetime] * 1000, data[index.current]];
+                var active = [data[index.datetime] * 1000, data[index.active]];
+                chartPzem004t.series[0].addPoint(voltage, false, true);
+                chartPzem004t.series[1].addPoint(current, false, true);
+                chartPzem004t.series[2].addPoint(active, false, true);
+                chartPzem004t.redraw();
             });
         }
 
@@ -82,12 +92,22 @@
             $.post('', {sensor: 'dht22', last: 'true'}, function (response) {
                 var data = response.data[0];
                 var index = response.types;
+
+                //update last section
                 var d = new Date((data[index.datetime] - 3 * 60 * 60) * 1000);
                 var datetime = d.toString('yyyy-MM-dd HH:mm:ss');
                 $('#last__weather__time span').text(datetime);
                 $('#last__weather__temp span').text(data[index.temperature]);
                 $('#last__weather__humidity span').text(data[index.humidity]);
-                $('#last__weather').animate({opacity: 0.1}, 500).animate({opacity: 1.0}, 500)
+                $('#last__weather').animate({opacity: 0.1}, 500).animate({opacity: 1.0}, 500);
+
+                //update graph
+                var chartDht22 = $('#dht22').highcharts();
+                var temperature = [data[index.datetime] * 1000, data[index.temperature]];
+                var humidity = [data[index.datetime] * 1000, data[index.humidity]];
+                chartDht22.series[0].addPoint(temperature, false, true);
+                chartDht22.series[1].addPoint(humidity, false, true);
+                chartDht22.redraw();
             });
         }
 
@@ -97,11 +117,19 @@
                 $.post('', {sensor: 'ds18b20', serial: serial, last: 'true'}, function (response) {
                     var data = response.data[0];
                     var index = response.types;
+
+                    //update last section
                     var d = new Date((data[index.datetime] - 3 * 60 * 60) * 1000);
                     var datetime = d.toString('yyyy-MM-dd HH:mm:ss');
                     $(thisEl).find('.last__ds18b20__time span').text(datetime);
                     $(thisEl).find('.last__ds18b20__temp span').text(data[index.temperature]);
                     $('#' + serial).animate({opacity: 0.1}, 500).animate({opacity: 1.0}, 500)
+
+                    //update graph
+                    var chartDs18b20__item = $('#ds18b20_' + serial).highcharts();
+                    var temperature = [data[index.datetime] * 1000, data[index.temperature]];
+                    chartDs18b20__item.series[0].addPoint(temperature, false, true);
+                    chartDs18b20__item.redraw();
                 });
             });
         }
