@@ -4,21 +4,16 @@ require_once __DIR__ . '/../php/autoload.php';
 use PDO\MySQL;
 use Device\DHT22;
 use RMQ\SimpleProducer;
+use Service\Output;
 use Symfony\Component\Yaml\Yaml;
 
 $config = Yaml::parseFile(__DIR__ . '/../config/config.yaml');
-$dht22 = new DHT22($config['service_sensor']['device']['dht'], $config['service_sensor']['debug']);
+$output = Output::getInstance($config['service_sensor']['output'], 'WatcherWeather');
+$dht22  = new DHT22($config['service_sensor']['device']['dht'], $output);
 
+$output->info('Check weather');
 if ($data = $dht22->getData()) {
-    $date = date('Y-m-d H:i:s');
-
-    //Show info in console
-    if ($config['service_sensor']['stdout']) {
-        echo 'date:' . $date . PHP_EOL;
-        foreach ($data as $key => $val) {
-            echo $key . ':' . $val . PHP_EOL;
-        }
-    }
+    $output->info('Data', $data);
 
     // Direct write to MySQL
     if ($config['service_sensor']['direct_db_write']) {
@@ -30,15 +25,15 @@ if ($data = $dht22->getData()) {
 
     // Publish message to RabbitMQ
     if ($config['service_sensor']['use_rabbitmq']) {
-        $producer = new SimpleProducer($config['service_sensor']['rabbitmq']);
-        $message = [
+        $producer = new SimpleProducer($config['service_sensor']['rabbitmq'], $output);
+        $message  = [
             'sensor' => 'dht22',
-            'date' => $date,
-            'data' => $data
+            'date'   => date('Y-m-d H:i:s'),
+            'data'   => $data
         ];
         $producer->publish(json_encode($message));
     }
 } else {
-    echo "Error" . PHP_EOL;
+    $output->error('Fail to get data from sensor');
 }
 

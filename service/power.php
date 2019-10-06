@@ -5,21 +5,16 @@ use PDO\MySQL;
 use Device\Serial;
 use Device\Peacefair;
 use RMQ\SimpleProducer;
+use Service\Output;
 use Symfony\Component\Yaml\Yaml;
 
-$config = Yaml::parseFile(__DIR__ . '/../config/config.yaml');
-$peacefair = new Peacefair(new Serial($config['service_sensor']['device']['peacefair']['uart']), $config['service_sensor']['debug']);
+$config    = Yaml::parseFile(__DIR__ . '/../config/config.yaml');
+$output    = Output::getInstance($config['service_sensor']['output'], 'WatcherPower');
+$peacefair = new Peacefair(new Serial($config['service_sensor']['device']['peacefair']['uart']), $output);
 
+$output->info('Check power');
 if ($data = $peacefair->getData()) {
-    $date = date('Y-m-d H:i:s');
-
-    //Show info in console
-    if ($config['service_sensor']['stdout']) {
-        echo 'date:' . $date . PHP_EOL;
-        foreach ($data as $key => $val) {
-            echo $key . ':' . $val . PHP_EOL;
-        }
-    }
+    $output->info('Data', $data);
 
     // Direct write to MySQL
     if ($config['service_sensor']['direct_db_write']) {
@@ -31,16 +26,16 @@ if ($data = $peacefair->getData()) {
 
     // Publish message to RabbitMQ
     if ($config['service_sensor']['use_rabbitmq']) {
-        $producer = new SimpleProducer($config['service_sensor']['rabbitmq']);
-        $message = [
+        $producer = new SimpleProducer($config['service_sensor']['rabbitmq'], $output);
+        $message  = [
             'sensor' => 'peacefair',
-            'date' => $date,
-            'data' => $data
+            'date'   => date('Y-m-d H:i:s'),
+            'data'   => $data
         ];
         $producer->publish(json_encode($message));
     }
 
 } else {
-    echo "Error" . PHP_EOL;
+    $output->error('Fail to get data from sensor');
 }
 

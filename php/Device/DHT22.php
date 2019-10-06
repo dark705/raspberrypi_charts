@@ -2,30 +2,30 @@
 
 namespace Device;
 
+use Psr\Log\LoggerInterface;
+
 class DHT22
 {
     private $pin;
     private $execute;
     private $data;
-    private $debug;
+    private $output;
 
-    public function __construct($device, $debug = false)
+    public function __construct($device, LoggerInterface $output)
     {
-        $this->pin = $device['pin'];
+        $this->pin     = $device['pin'];
         $this->execute = __DIR__ . $device['loldht'];
-        $this->data = ['temperature' => false, 'humidity' => false];
-        $this->debug = $debug;
+        $this->data    = ['temperature' => false, 'humidity' => false];
+        $this->output  = $output;
     }
 
     private function update()
     {
-        $dht = exec("sudo $this->execute $this->pin");
-        if (preg_match_all('/\-?\d{1,3}\.\d{1}/', $dht, $dht_arr) == 2) {
-            $this->data['temperature'] = $dht_arr[0][1];
-            $this->data['humidity'] = $dht_arr[0][0];
-            if ($this->debug) {
-                echo $dht . PHP_EOL;
-            }
+        $execResult = exec("sudo $this->execute $this->pin");
+        if (preg_match_all('/\-?\d{1,3}\.\d{1}/', $execResult, $execResultMatch) == 2) {
+            $this->data['temperature'] = $execResultMatch[0][1];
+            $this->data['humidity'] = $execResultMatch[0][0];
+            $this->output->debug($execResult);
         } else {
             $this->data['temperature'] = $this->data['humidity'] = false;
         }

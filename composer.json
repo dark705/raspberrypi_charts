@@ -1,6 +1,7 @@
 {
     "require": {
         "symfony/yaml": "^3.4",
-        "php-amqplib/php-amqplib": "^2.9"
+        "php-amqplib/php-amqplib": "^2.9",
+        "monolog/monolog": "^1.0"
     }
 }
