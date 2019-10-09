@@ -2,17 +2,13 @@
 
 namespace RMQ;
 
+use Exception;
 use PDO\MySQL;
 
 class SensorConsumer extends SimpleConsumer
 {
-    private $needAck;
+    /** @var  MySQL*/
     private $pdo;
-
-    public function setAck($ack)
-    {
-        $this->needAck = $ack;
-    }
 
     public function setPDO(MySQL $pdo)
     {
@@ -21,40 +17,33 @@ class SensorConsumer extends SimpleConsumer
 
     public function processMessage($msg)
     {
-        if ($this->debug) {
-            echo 'Incoming message: ' . $msg->body . PHP_EOL;
-        }
+        parent::processMessage($msg);
+
         $mes = json_decode($msg->body, true);
+        $this->output->info('Data from', ['sensor' => $mes['sensor']]);
 
         switch ($mes['sensor']) {
             case 'peacefair':
                 $query = sprintf("INSERT INTO `pzem004t` (`datetime`, `voltage`, `current`, `active`, `energy`) VALUES ('%s', '%s', '%s', '%s', '%s');",
-                    $mes['date'], $mes['data']['voltage'], $mes['data']['current'], $mes['data']['active'], $mes['data']['energy']);
+                                 $mes['date'], $mes['data']['voltage'], $mes['data']['current'], $mes['data']['active'], $mes['data']['energy']);
                 break;
             case 'dht22':
                 $query = sprintf("INSERT INTO `dht22` (`datetime`,`temperature`, `humidity`) VALUES ('%s', '%s', '%s');",
-                    $mes['date'], $mes['data']['temperature'], $mes['data']['humidity']);
+                                 $mes['date'], $mes['data']['temperature'], $mes['data']['humidity']);
                 break;
             case 'ds18b20':
                 $query = sprintf("INSERT INTO `ds18b20` (`datetime`, `serial`, `temperature`) VALUES ('%s', '%s', '%s');",
-                    $mes['date'], $mes['data']['serial'], $mes['data']['temperature']);
+                                 $mes['date'], $mes['data']['serial'], $mes['data']['temperature']);
                 break;
             default:
-                throw new \Exception('Unknown sensor in RMQ message');
+                throw new Exception('Unknown sensor in RMQ message');
         }
-        if ($this->debug) {
-            echo 'SQL query: ' . $query . PHP_EOL;
-        }
+        $this->output->debug('SQL query: ', ['query' => $query]);
 
         if ($this->pdo->request($query)) {
-            if ($this->stdout) {
-                echo 'Success query' . PHP_EOL;
-            }
-            if ($this->needAck) {
+            $this->output->debug('Success MySQL insert');
+            if ($this->config['ack']) {
                 $this->sendAck($msg);
-                if ($this->stdout) {
-                    echo 'RMQ ack' . PHP_EOL;
-                }
             }
         }
     }

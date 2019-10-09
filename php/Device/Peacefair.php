@@ -4,17 +4,19 @@ namespace Device;
 
 //Peacefair(object Serial)->getData() - return array with keys "voltage", "current", "active", "energy" = currient values
 //Peacefair->voltage - get "voltage"...
+use Psr\Log\LoggerInterface;
+
 class Peacefair
 {
     private $dev;
     private $data;
-    private $debug;
+    private $output;
 
-    public function __construct(Serial $dev, $debug = false)
+    public function __construct(Serial $dev, LoggerInterface $output)
     {
-        $this->dev = $dev;
-        $this->data = array();
-        $this->debug = $debug;
+        $this->dev    = $dev;
+        $this->data   = array();
+        $this->output = $output;
     }
 
     private function updateVoltage($tx = 'B0C0A80101001A')
@@ -23,7 +25,7 @@ class Peacefair
         if ($rx = $this->dev->txrx(hex2bin($tx))) {
             $arr = str_split(bin2hex($rx), 2);
             $this->data['voltage'] = hexdec($arr[1] . $arr[2]) + hexdec($arr[3]) / 10;
-            if ($this->debug) {
+            if ($this->output) {
                 $this->showDebug($tx, $rx);
             }
         } else {
@@ -37,7 +39,7 @@ class Peacefair
         if ($rx = $this->dev->txrx(hex2bin($tx))) {
             $arr = str_split(bin2hex($rx), 2);
             $this->data['current'] = hexdec($arr[2]) + hexdec($arr[3]) / 100;
-            if ($this->debug) {
+            if ($this->output) {
                 $this->showDebug($tx, $rx);
             }
         } else {
@@ -52,7 +54,7 @@ class Peacefair
         if ($rx = $this->dev->txrx(hex2bin($tx))) {
             $arr = str_split(bin2hex($rx), 2);
             $this->data['active'] = hexdec($arr[1] . $arr[2]);
-            if ($this->debug) {
+            if ($this->output) {
                 $this->showDebug($tx, $rx);
             }
         } else {
@@ -66,7 +68,7 @@ class Peacefair
         if ($rx = $this->dev->txrx(hex2bin($tx))) {
             $arr = str_split(bin2hex($rx), 2);
             $this->data['energy'] = hexdec($arr[1] . $arr[2] . $arr[3]);
-            if ($this->debug) {
+            if ($this->output) {
                 $this->showDebug($tx, $rx);
             }
         } else {
@@ -116,7 +118,6 @@ class Peacefair
 
     private function showDebug($tx, $rx)
     {
-        echo 'TX:' . $tx . PHP_EOL;
-        echo 'RX:' . bin2hex($rx) . PHP_EOL;
+        $this->output->debug('Peacefair exchange data', ['tx'=> $tx, 'rx' => strtoupper(bin2hex($rx))]);
     }
 }
