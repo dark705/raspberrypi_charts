@@ -18,8 +18,12 @@ service_sensor:
       pin:  7
     peacefair:
       uart: '/dev/ttyS0'
-  stdout: true
-  debug:  false
+  output:
+    to:
+      stdout: false
+      syslog: true
+    level: 'info'
+    ident: 'ServiceSensor'
 
 service_rmq:
   db:
@@ -34,8 +38,12 @@ service_rmq:
     password: 'admin'
     queue: 'sensor'
     ack: true
-  stdout: true
-  debug:  false
+  output:
+    to:
+      stdout: false
+      syslog: true
+    level: 'info'
+    ident: 'ServiceRMQ'
 
 web:
   db:
@@ -49,5 +57,4 @@ web:
     28-0417503c27ff:  'Котёл выход'
     28-0417504b52ff:  'Котёл приход с гаража'
     28-041750859bff:  'Котёл вход'
-  debug:  false
 

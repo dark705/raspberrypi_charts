@@ -4,21 +4,16 @@ require_once __DIR__ . '/../php/autoload.php';
 use PDO\MySQL;
 use Device\DS18B20;
 use RMQ\SimpleProducer;
+use Service\Output;
 use Symfony\Component\Yaml\Yaml;
 
 $config = Yaml::parseFile(__DIR__ . '/../config/config.yaml');
-$ds = new DS18B20($config['service_sensor']['debug']);
+$output = Output::getInstance($config['service_sensor']['output'], 'WatcherTemperature');
+$ds     = new DS18B20($output);
 
+$output->info('Check temperatures');
 if ($data = $ds->getAll()) {
-    $date = date('Y-m-d H:i:s');
-
-    //Show info in console
-    if ($config['service_sensor']['stdout']) {
-        echo 'date:' . $date . PHP_EOL;
-        foreach ($data as $serial => $value) {
-            echo $serial . ' = ' . $value . PHP_EOL;
-        }
-    }
+    $output->info('Data', $data);
 
     // Direct write to MySQL
     if ($config['service_sensor']['direct_db_write']) {
@@ -32,13 +27,13 @@ if ($data = $ds->getAll()) {
 
     // Publish message to RabbitMQ
     if ($config['service_sensor']['use_rabbitmq']) {
-        $producer = new SimpleProducer($config['service_sensor']['rabbitmq']);
+        $producer = new SimpleProducer($config['service_sensor']['rabbitmq'], $output);
         foreach ($data as $serial => $value) {
             $message = [
                 'sensor' => 'ds18b20',
-                'date' => $date,
-                'data' => [
-                    'serial' => $serial,
+                'date'   => date('Y-m-d H:i:s'),
+                'data'   => [
+                    'serial'      => $serial,
                     'temperature' => $value
                 ]
             ];
@@ -46,5 +41,5 @@ if ($data = $ds->getAll()) {
         }
     }
 } else {
-    echo "Error" . PHP_EOL;
+    $output->error('Fail to get data from sensor');
 }
