@@ -1,5 +1,5 @@
 <?php
-require_once('../php/autoload.php');
+require_once('../vendor/autoload.php');
 
 use DAO\SensorsFactory;
 use Models\Template;
