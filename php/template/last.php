@@ -114,12 +114,32 @@
                 $('#last__weather').animate({opacity: 0.1}, 500).animate({opacity: 1.0}, 500);
 
                 //update graph
-                var chartDht22 = $('#dht22').highcharts();
+                var chartWeather = $('#weather').highcharts();
                 var temperature = [data[index.datetime] * 1000, data[index.temperature]];
                 var humidity = [data[index.datetime] * 1000, data[index.humidity]];
-                chartDht22.series[0].addPoint(temperature, false, true);
-                chartDht22.series[1].addPoint(humidity, false, true);
-                chartDht22.redraw();
+                chartWeather.series[0].addPoint(temperature, false, true);
+                chartWeather.series[1].addPoint(humidity, false, true);
+                chartWeather.redraw();
+            });
+        }
+
+        function updateLastWeatherPressure() {
+            $.post('', {sensor: 'bmp280', last: 'true'}, function (response) {
+                var data = response.data[0];
+                var index = response.types;
+
+                //update last section/
+                var d = new Date((data[index.datetime] - 3 * 60 * 60) * 1000);
+                var datetime = d.toString('yyyy-MM-dd HH:mm:ss');
+                $('#last__weather__time__pressure span').text(datetime);
+                $('#last__weather__pressure span').text(data[index.pressure]);
+                $('#last__weather').animate({opacity: 0.1}, 500).animate({opacity: 1.0}, 500);
+
+                //update graph
+                var chartWeatherPressure = $('#weather').highcharts();
+                var pressure = [data[index.datetime] * 1000, data[index.pressure]];
+                chartWeatherPressure.series[2].addPoint(pressure, false, true);
+                chartWeatherPressure.redraw();
             });
         }
 
@@ -150,6 +170,7 @@
             setInterval(function () {
                 updateLastElectro();
                 updateLastWeather();
+                updateLastWeatherPressure();
                 updateLastDs18b20()
             }, 1 * 60 * 1000);
         });

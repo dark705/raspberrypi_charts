@@ -54,10 +54,18 @@ if ($_POST) {
     );
 
     $html_pzem004t = new Template('../php/template/pzem004t.php');
-    $html_dht22    = new Template('../php/template/dht22.php');
+    $weather       = new Template('../php/template/weather.php');
     $html_ds18b20  = new Template('../php/template/ds18b20.php', array('ds18b20' => $sensor_ds18b20));
 
-    $html_common = new Template('../php/template/common.php', array('last' => $html_last->get(), 'pzem004t' => $html_pzem004t->get(), 'dht22' => $html_dht22->get(), 'ds18b20' => $html_ds18b20->get()));
+    $html_common = new Template(
+        '../php/template/common.php',
+        [
+            'last'     => $html_last->get(),
+            'pzem004t' => $html_pzem004t->get(),
+            'weather'  => $weather->get(),
+            'ds18b20'  => $html_ds18b20->get()
+        ]
+    );
 
     $html_common->show();
 }
