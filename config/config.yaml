@@ -19,6 +19,7 @@ service_sensor:
       pin:  7
     peacefair:
       uart: '/dev/ttyS0'
+      ticker: 1
     bmp280:
       ticker: 5
   output:

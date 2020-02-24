@@ -1,0 +1,12 @@
+[Unit]
+Description=Watcher weather pressure sensor
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=60
+ExecStart= /var/www/html/chart-ng/bin/go/pressure
+
+[Install]
+WantedBy=multi-user.target
