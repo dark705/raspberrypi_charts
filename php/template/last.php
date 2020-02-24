@@ -1,7 +1,7 @@
 <div id="lasts">
     <!-- start electro last section -->
     <?php
-    $lastE = $pzem004t->getLast();
+    $lastE     = $pzem004t->getLast();
     $lastEData = $lastE['data'][0];
     ?>
     <div class="last">
@@ -21,18 +21,30 @@
     <!-- end -->
     <!-- start weather last section -->
     <?php
-    $lastW = $dht22->getLast();
-    $lastWData = $lastW['data'][0];
+    $lastW      = $dht22->getLast();
+    $lastWData  = $lastW['data'][0];
+    $lastWP     = $bmp280->getLast();
+    $lastWPData = $lastWP['data'][0];
     ?>
     <div class="last">
         <a class="itemlink" href="#chart__weather">
             <div id="last__weather" class="item ">
                 <h3>Погода:</h3>
-                <p id="last__weather__time" class="ontime">(показания на:
-                    <span><?= gmdate("Y-m-d H:i:s", $lastWData[$lastW['types']['datetime']]) ?></span>)</p>
+                <p id="last__weather__time" class="ontime">
+                    (показания на:
+                    <span><?= gmdate("Y-m-d H:i:s", $lastWData[$lastW['types']['datetime']]) ?></span>
+                    )
+                </p>
                 <p id="last__weather__temp">Температура: <span><?= $lastWData[$lastW['types']['temperature']] ?></span>
                 </p>
                 <p id="last__weather__humidity">Влажность: <span><?= $lastWData[$lastW['types']['humidity']] ?></span>
+                </p>
+                <p id="last__weather__time__pressure" class="ontime">
+                    (показания на:
+                    <span><?= gmdate("Y-m-d H:i:s", $lastWPData[$lastW['types']['datetime']]) ?></span>
+                    )
+                </p>
+                <p id="last__weather__pressure">Давление: <span><?= $lastWPData[$lastWP['types']['pressure']] ?></span>
                 </p>
             </div>
         </a>
@@ -45,7 +57,7 @@
                 <div id="<?= $serial ?>" class="item last__ds18b20">
                     <h3><?= $name ?></h3>
                     <?php
-                    $lastD = $ds18b20->getLast($serial);
+                    $lastD     = $ds18b20->getLast($serial);
                     $lastDData = $lastD['data'][0];
                     ?>
                     <p class="last__ds18b20__time ontime">(показания на:

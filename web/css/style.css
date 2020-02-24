@@ -9,7 +9,7 @@
 	vertical-align: middle;
 	margin:1em;
 	border:1px solid #ddd;
-	height: 10em;
+	height: 11em;
 }
 
 .last h3{
@@ -30,9 +30,10 @@
 	clear:both;
 }
 .ontime {
-
-	padding-bottom:0.6em;
-	font-size:0.8em;
+	padding-top:0.5em;
+	padding-bottom:0;
+	font-size:0.76em;
+    color: #777;
 }
 
 .itemlink {
