@@ -35,10 +35,11 @@ class SensorConsumer extends SimpleConsumer
                 $query = sprintf("INSERT INTO `ds18b20` (`datetime`, `serial`, `temperature`) VALUES ('%s', '%s', '%s');",
                                  $mes['date'], $mes['data']['serial'], $mes['data']['temperature']);
                 break;
-            case 'bmp280': //TODO
-                $this->output->notice("Mast implement BMP280");
-                $this->sendAck($msg);
-                return;
+            case 'bmp280':
+                $mes['date'] = str_replace('+03:00','', $mes['date']); //goLang datetime
+                $query = sprintf("INSERT INTO `bmp280` (`datetime`, `pressure`, `temperature`) VALUES ('%s', '%s', '%s');",
+                                 $mes['date'], $mes['data']['pressure'], $mes['data']['temperature']);
+                break;
             default:
                 throw new Exception('Unknown sensor in RMQ message');
         }
