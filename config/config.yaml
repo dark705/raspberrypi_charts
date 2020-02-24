@@ -9,6 +9,7 @@ service_sensor:
   rabbitmq:
     ip: 'localhost'
     port: 5672
+    timeout: 5
     user: 'admin'
     password: 'admin'
     queue: 'sensor'
@@ -18,6 +19,8 @@ service_sensor:
       pin:  7
     peacefair:
       uart: '/dev/ttyS0'
+    bmp280:
+      ticker: 5
   output:
     to:
       stdout: false

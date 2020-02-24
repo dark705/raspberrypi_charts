@@ -7,7 +7,7 @@ use PDO\MySQL;
 
 class SensorConsumer extends SimpleConsumer
 {
-    /** @var  MySQL*/
+    /** @var  MySQL */
     private $pdo;
 
     public function setPDO(MySQL $pdo)
@@ -35,6 +35,10 @@ class SensorConsumer extends SimpleConsumer
                 $query = sprintf("INSERT INTO `ds18b20` (`datetime`, `serial`, `temperature`) VALUES ('%s', '%s', '%s');",
                                  $mes['date'], $mes['data']['serial'], $mes['data']['temperature']);
                 break;
+            case 'bmp280': //TODO
+                $this->output->notice("Mast implement BMP280");
+                $this->sendAck($msg);
+                return;
             default:
                 throw new Exception('Unknown sensor in RMQ message');
         }
