@@ -27,6 +27,11 @@ class SensorConsumer extends SimpleConsumer
                 $query = sprintf("INSERT INTO `pzem004t` (`datetime`, `voltage`, `current`, `active`, `energy`) VALUES ('%s', '%s', '%s', '%s', '%s');",
                                  $mes['date'], $mes['data']['voltage'], $mes['data']['current'], $mes['data']['active'], $mes['data']['energy']);
                 break;
+            case 'pzem004t.v3':
+                $mes['date'] = str_replace('+03:00','', $mes['date']); //goLang datetime
+                $query = sprintf("INSERT INTO `pzem004t` (`datetime`, `voltage`, `current`, `active`, `energy`) VALUES ('%s', '%s', '%s', '%s', '%s');",
+                                 $mes['date'], $mes['data']['voltage'], $mes['data']['current'], $mes['data']['active'], $mes['data']['energy']);
+                break;
             case 'dht22':
                 $query = sprintf("INSERT INTO `dht22` (`datetime`,`temperature`, `humidity`) VALUES ('%s', '%s', '%s');",
                                  $mes['date'], $mes['data']['temperature'], $mes['data']['humidity']);
