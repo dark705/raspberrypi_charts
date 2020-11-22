@@ -5,7 +5,7 @@ use DAO\SensorsFactory;
 use Models\Template;
 use Symfony\Component\Yaml\Yaml;
 
-$config = Yaml::parseFile('../config/config.yaml');
+$config = Yaml::parseFile('../config/config.web.yaml');
 
 if ($_POST) {
     header("Content-Type: application/json");
@@ -18,7 +18,7 @@ if ($_POST) {
         exit('invalid sensor name');
 
 
-    $sensor = SensorsFactory::create($_POST['sensor'], $config['web']);
+    $sensor = SensorsFactory::create($_POST['sensor'], $config);
 
     if (array_key_exists('names', $_POST)) {
         echo json_encode($sensor->getNames());
@@ -38,10 +38,10 @@ if ($_POST) {
         echo json_encode($sensor->get($serial));
     }
 } else {
-    $sensor_pzem004t = SensorsFactory::create('pzem004t', $config['web']);
-    $sensor_dht22    = SensorsFactory::create('dht22', $config['web']);
-    $sensor_ds18b20  = SensorsFactory::create('ds18b20', $config['web']);
-    $sensor_bmp280   = SensorsFactory::create('bmp280', $config['web']);
+    $sensor_pzem004t = SensorsFactory::create('pzem004t', $config);
+    $sensor_dht22    = SensorsFactory::create('dht22', $config);
+    $sensor_ds18b20  = SensorsFactory::create('ds18b20', $config);
+    $sensor_bmp280   = SensorsFactory::create('bmp280', $config);
 
     $html_last = new Template(
         '../php/template/last.php',

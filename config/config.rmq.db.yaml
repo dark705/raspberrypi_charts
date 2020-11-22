@@ -1,0 +1,18 @@
+rabbitmq:
+  ip: '192.168.23.12'
+  port: 5672
+  user: 'admin'
+  password: 'admin'
+  queue: 'sensor'
+  ack: true
+db:
+  host: 'localhost'
+  name: 'chart-ng'
+  login: 'chart'
+  pass: 'chart'
+output:
+  to:
+    stdout: false
+    syslog: true
+  level: 'info'
+  ident: 'ServiceRMQ'
