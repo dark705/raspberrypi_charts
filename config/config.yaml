@@ -9,6 +9,7 @@ service_sensor:
   rabbitmq:
     ip: 'localhost'
     port: 5672
+    timeout: 5
     user: 'admin'
     password: 'admin'
     queue: 'sensor'
@@ -16,45 +17,15 @@ service_sensor:
     dht:
       loldht: '/../../bin/loldht/loldht'
       pin:  7
+      ticker: 600
     peacefair:
       uart: '/dev/ttyS0'
+      ticker: 1
+    bmp280:
+      ticker: 5
   output:
     to:
       stdout: false
       syslog: true
     level: 'info'
     ident: 'ServiceSensor'
-
-service_rmq:
-  db:
-    host: 'localhost'
-    name: 'chart-ng'
-    login: 'chart'
-    pass: 'chart'
-  rabbitmq:
-    ip: '192.168.23.12'
-    port: 5672
-    user: 'admin'
-    password: 'admin'
-    queue: 'sensor'
-    ack: true
-  output:
-    to:
-      stdout: false
-      syslog: true
-    level: 'info'
-    ident: 'ServiceRMQ'
-
-web:
-  db:
-    host: 'localhost'
-    name: 'chart-ng'
-    login: 'chart'
-    pass: 'chart'
-  names:
-    28-04175021d3ff:  'Датчик 1 отключен'
-    28-041750878dff:  'Кухня'
-    28-0417503c27ff:  'Котёл выход'
-    28-0417504b52ff:  'Котёл приход с гаража'
-    28-041750859bff:  'Котёл вход'
-

@@ -16,7 +16,8 @@
 		<script src="js/config.js"></script>
 		<?=$last?>
 		<?=$pzem004t?>
-		<?=$dht22?>
+		<?=$weather?>
 		<?=$ds18b20?>
+        <?=$ups?>
 	</body>
 </html>

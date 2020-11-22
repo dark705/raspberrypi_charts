@@ -1,10 +1,9 @@
 <div class="chart">
     <a name="chart__weather"></a>
-    <div id="dht22" style="height: 500px; min-width: 310px"></div>
+    <div id="weather" style="height: 700px; min-width: 310px"></div>
 </div>
 <script>
-    var chartDht22 = Highcharts.stockChart('dht22', {
-
+    var chartWeather = Highcharts.stockChart('weather', {
         rangeSelector: rangeSelectorObj,
 
         title: {
@@ -31,7 +30,7 @@
             title: {
                 text: 'Температура'
             },
-            height: '60%',
+            height: '40%',
             lineWidth: 1,
             resize: {
                 enabled: true
@@ -44,8 +43,20 @@
             title: {
                 text: 'Влажность'
             },
-            top: '65%',
-            height: '30%',
+            top: '43%',
+            height: '28%',
+            offset: 0,
+            lineWidth: 1
+        }, {
+            labels: {
+                align: 'right',
+                x: -3
+            },
+            title: {
+                text: 'Давление'
+            },
+            top: '75%',
+            height: '28%',
             offset: 0,
             lineWidth: 1
         }],
@@ -70,10 +81,14 @@
             type: 'spline',
             name: '%',
             yAxis: 1
+        }, {
+            type: 'spline',
+            name: 'мм',
+            yAxis: 2
         }]
     });
 
-    chartDht22.showLoading();
+    chartWeather.showLoading();
     $.post('', {sensor: 'dht22'}, function (response) {
         var temperature = [], humidity = [];
         var index = response.types;
@@ -82,9 +97,17 @@
             humidity.push([data[index.datetime] * 1000, data[index.humidity]]);
         });
 
-        chartDht22.series[0].setData(temperature, false);
-        chartDht22.series[1].setData(humidity, true);
-        chartDht22.hideLoading();
+        chartWeather.series[0].setData(temperature, false);
+        chartWeather.series[1].setData(humidity, true);
+        chartWeather.hideLoading();
+    });
 
+    $.post('', {sensor: 'bmp280'}, function (response) {
+        var pressure = [];
+        var index = response.types;
+        $.each(response.data, function (i, data) {
+            pressure.push([data[index.datetime] * 1000, data[index.pressure]]);
+        });
+        chartWeather.series[2].setData(pressure, true);
     });
 </script>
