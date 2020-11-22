@@ -2,7 +2,6 @@
 
 namespace RMQ;
 
-use Exception;
 use PDO\MySQL;
 
 class SensorConsumer extends SimpleConsumer
@@ -28,32 +27,38 @@ class SensorConsumer extends SimpleConsumer
                                  $mes['date'], $mes['data']['voltage'], $mes['data']['current'], $mes['data']['active'], $mes['data']['energy']);
                 break;
             case 'pzem004t.v3':
-                $mes['date'] = str_replace('+03:00','', $mes['date']); //goLang datetime
-                $query = sprintf("INSERT INTO `pzem004t` (`datetime`, `voltage`, `current`, `active`, `energy`) VALUES ('%s', '%s', '%s', '%s', '%s');",
-                                 $mes['date'], $mes['data']['voltage'], $mes['data']['current'], $mes['data']['active'], $mes['data']['energy']);
+                $mes['date'] = str_replace('+03:00', '', $mes['date']); //goLang datetime
+                $query       = sprintf("INSERT INTO `pzem004t` (`datetime`, `voltage`, `current`, `active`, `energy`) VALUES ('%s', '%s', '%s', '%s', '%s');",
+                                       $mes['date'], $mes['data']['voltage'], $mes['data']['current'], $mes['data']['active'], $mes['data']['energy']);
                 break;
             case 'dht22':
-                $query = sprintf("INSERT INTO `dht22` (`datetime`,`temperature`, `humidity`) VALUES ('%s', '%s', '%s');",
-                                 $mes['date'], $mes['data']['temperature'], $mes['data']['humidity']);
+                $mes['date'] = str_replace('+03:00', '', $mes['date']); //goLang datetime
+                $query       = sprintf("INSERT INTO `dht22` (`datetime`,`temperature`, `humidity`) VALUES ('%s', '%s', '%s');",
+                                       $mes['date'], $mes['data']['temperature'], $mes['data']['humidity']);
                 break;
             case 'ds18b20':
                 $query = sprintf("INSERT INTO `ds18b20` (`datetime`, `serial`, `temperature`) VALUES ('%s', '%s', '%s');",
                                  $mes['date'], $mes['data']['serial'], $mes['data']['temperature']);
                 break;
             case 'bmp280':
-                $mes['date'] = str_replace('+03:00','', $mes['date']); //goLang datetime
-                $query = sprintf("INSERT INTO `bmp280` (`datetime`, `pressure`, `temperature`) VALUES ('%s', '%s', '%s');",
-                                 $mes['date'], $mes['data']['pressure'], $mes['data']['temperature']);
+                $mes['date'] = str_replace('+03:00', '', $mes['date']); //goLang datetime
+                $query       = sprintf("INSERT INTO `bmp280` (`datetime`, `pressure`, `temperature`) VALUES ('%s', '%s', '%s');",
+                                       $mes['date'], $mes['data']['pressure'], $mes['data']['temperature']);
                 break;
             default:
-                throw new Exception('Unknown sensor in RMQ message');
+                $this->output->warning('Unknown sensor in RMQ message', ['rmqMessage' => $mes] );
+                if ($this->config['ack']) {
+                    $this->sendAck($msg);
+                }
         }
-        $this->output->debug('SQL query: ', ['query' => $query]);
+        $this->output->debug('SQL query: ', ['query' => $query ?? null]);
 
-        if ($this->pdo->request($query)) {
-            $this->output->debug('Success MySQL insert');
-            if ($this->config['ack']) {
-                $this->sendAck($msg);
+        if (isset($query)){
+            if ($this->pdo->request($query)) {
+                $this->output->debug('Success MySQL insert');
+                if ($this->config['ack']) {
+                    $this->sendAck($msg);
+                }
             }
         }
     }

@@ -17,6 +17,7 @@ service_sensor:
     dht:
       loldht: '/../../bin/loldht/loldht'
       pin:  7
+      ticker: 600
     peacefair:
       uart: '/dev/ttyS0'
       ticker: 1
