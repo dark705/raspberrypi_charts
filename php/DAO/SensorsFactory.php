@@ -16,6 +16,8 @@ class SensorsFactory{
 				return new SensorDht22($mySQL);
             case 'bmp280':
                 return new SensorBmp280($mySQL);
+            case 'ups':
+                return new SensorUPS($mySQL);
 			default:
 				throw new \Exception ('Unknown sensor class name');
 		}

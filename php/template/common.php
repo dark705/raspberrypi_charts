@@ -18,5 +18,6 @@
 		<?=$pzem004t?>
 		<?=$weather?>
 		<?=$ds18b20?>
+        <?=$ups?>
 	</body>
 </html>

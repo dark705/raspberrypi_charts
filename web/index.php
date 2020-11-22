@@ -9,7 +9,7 @@ $config = Yaml::parseFile('../config/config.web.yaml');
 
 if ($_POST) {
     header("Content-Type: application/json");
-    $validSensors = array('pzem004t', 'dht22', 'ds18b20', 'bmp280');
+    $validSensors = ['pzem004t', 'dht22', 'ds18b20', 'bmp280', 'ups'];
 
     if (!array_key_exists('sensor', $_POST))
         exit ('Please choose sensor name, by POST request');
@@ -42,30 +42,34 @@ if ($_POST) {
     $sensor_dht22    = SensorsFactory::create('dht22', $config);
     $sensor_ds18b20  = SensorsFactory::create('ds18b20', $config);
     $sensor_bmp280   = SensorsFactory::create('bmp280', $config);
+    $sensor_ups      = SensorsFactory::create('ups', $config);
 
-    $html_last = new Template(
+    $templateLast = new Template(
         '../php/template/last.php',
         [
             'pzem004t' => $sensor_pzem004t,
             'dht22'    => $sensor_dht22,
             'ds18b20'  => $sensor_ds18b20,
-            'bmp280'   => $sensor_bmp280
+            'bmp280'   => $sensor_bmp280,
+            'ups'      => $sensor_ups,
         ]
     );
 
-    $html_pzem004t = new Template('../php/template/pzem004t.php');
-    $weather       = new Template('../php/template/weather.php');
-    $html_ds18b20  = new Template('../php/template/ds18b20.php', array('ds18b20' => $sensor_ds18b20));
+    $templatePzem004t    = new Template('../php/template/pzem004t.php');
+    $templateWeather = new Template('../php/template/weather.php');
+    $templateDs18b20    = new Template('../php/template/ds18b20.php', array('ds18b20' => $sensor_ds18b20));
+    $templateUps      = new Template('../php/template/ups.php');
 
-    $html_common = new Template(
+    $htmlCommon = new Template(
         '../php/template/common.php',
         [
-            'last'     => $html_last->get(),
-            'pzem004t' => $html_pzem004t->get(),
-            'weather'  => $weather->get(),
-            'ds18b20'  => $html_ds18b20->get()
+            'last'     => $templateLast->get(),
+            'pzem004t' => $templatePzem004t->get(),
+            'weather'  => $templateWeather->get(),
+            'ds18b20'  => $templateDs18b20->get(),
+            'ups'      => $templateUps->get(),
         ]
     );
 
-    $html_common->show();
+    $htmlCommon->show();
 }

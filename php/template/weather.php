@@ -4,7 +4,6 @@
 </div>
 <script>
     var chartWeather = Highcharts.stockChart('weather', {
-
         rangeSelector: rangeSelectorObj,
 
         title: {
