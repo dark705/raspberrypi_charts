@@ -77,7 +77,7 @@
     <div class="last">
         <a class="itemlink" href="#chart__ups">
             <div id="last__ups" class="item">
-                <h3>ИБП Насосы:</h3>
+                <h3>ИБП:</h3>
                 <p id="last__ups__time" class="ontime">(показания на:
                     <span><?= gmdate("Y-m-d H:i:s", $lastUPSData[$lastUPS['types']['datetime']]) ?></span>)</p>
                 <p id="last__ups__voltage__in">Напряжение вход: <span><?= $lastUPSData[$lastUPS['types']['input_voltage']] ?></span></p>

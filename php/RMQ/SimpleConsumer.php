@@ -7,6 +7,8 @@ class SimpleConsumer extends SimpleExchange
     public function listen()
     {
         $this->output->info('Start RMQ Consumer');
+        $this->channel->queue_declare($this->queue, false, true, false, false);
+        $this->channel->queue_bind($this->queue, $this->exchange);
         $this->channel->basic_consume($this->queue, '', false, false, false, false, [$this, 'processMessage']);
 
         while (count($this->channel->callbacks)) {

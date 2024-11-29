@@ -9,6 +9,7 @@ class SimpleExchange
 {
     protected $connection;
     protected $channel;
+    protected $exchange;
     protected $queue;
     protected $config;
     protected $output;
@@ -25,7 +26,7 @@ class SimpleExchange
         );
         $this->channel    = $this->connection->channel();
         $this->queue      = $config['queue'];
-        $this->channel->queue_declare($this->queue, false, true, false, false);
+        $this->exchange   = $config['exchange'];
     }
 
     public function __destruct()

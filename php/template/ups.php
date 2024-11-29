@@ -7,7 +7,7 @@
         rangeSelector: rangeSelectorObj,
 
         title: {
-            text: 'ИБП Насосы'
+            text: 'ИБП'
         },
 
         legend: {

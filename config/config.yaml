@@ -13,6 +13,7 @@ service_sensor:
     user: 'admin'
     password: 'admin'
     queue: 'sensor'
+    exchange: 'sensor'
   device:
     dht:
       loldht: '/../../bin/loldht/loldht'

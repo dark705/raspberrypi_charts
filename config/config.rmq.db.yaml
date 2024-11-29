@@ -4,6 +4,7 @@ rabbitmq:
   user: 'admin'
   password: 'admin'
   queue: 'sensor'
+  exchange: 'sensor'
   ack: true
 db:
   host: 'localhost'
